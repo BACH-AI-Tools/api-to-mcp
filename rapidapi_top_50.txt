@@ -1,0 +1,99 @@
+# RapidAPI Top 50 热门 API 列表
+# 
+# 这是一个示例列表，包含一些流行的 RapidAPI
+# 取消注释想要爬取的 API
+#
+# 使用方法：
+#   python batch_rapidapi.py rapidapi_top_50.txt --use-selenium --delay 30
+
+# ========================================
+# Jobs & Career（职位招聘）
+# ========================================
+https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
+# https://rapidapi.com/letscrape-6bRBa3QguO5/api/linkedin-data-api
+
+# ========================================
+# Weather & Environment（天气环境）
+# ========================================
+# https://rapidapi.com/weatherapi/api/weatherapi-com
+# https://rapidapi.com/visual-crossing-corporation-visual-crossing-corporation-default/api/visual-crossing-weather
+
+# ========================================
+# News & Media（新闻媒体）
+# ========================================
+# https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher
+# https://rapidapi.com/contextualwebsearch/api/web-search
+
+# ========================================
+# Finance & Crypto（金融加密货币）
+# ========================================
+# https://rapidapi.com/alphavantage/api/alpha-vantage
+# https://rapidapi.com/apidojo/api/yahoo-finance1
+# https://rapidapi.com/Glavier/api/coinranking1
+
+# ========================================
+# Social Media（社交媒体）
+# ========================================
+# https://rapidapi.com/omarmhaimdat/api/instagram28
+# https://rapidapi.com/twitter241/api/twitter241
+# https://rapidapi.com/social-api1-instagram/api/instagram-scraper-api2
+
+# ========================================
+# Translation & Language（翻译语言）
+# ========================================
+# https://rapidapi.com/googlecloud/api/google-translate1
+# https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-translator-text
+
+# ========================================
+# AI & Machine Learning（人工智能）
+# ========================================
+# https://rapidapi.com/OpenAI-API/api/openai80
+# https://rapidapi.com/huggingface-api-huggingface-api-default/api/hugging-face-inference-api
+
+# ========================================
+# E-commerce（电商）
+# ========================================
+# https://rapidapi.com/apidojo/api/amazon-product-data
+# https://rapidapi.com/apidojo/api/ebay16
+
+# ========================================
+# Travel & Hotels（旅游酒店）
+# ========================================
+# https://rapidapi.com/apidojo/api/hotels4
+# https://rapidapi.com/apidojo/api/tripadvisor16
+
+# ========================================
+# Food & Recipe（美食食谱）
+# ========================================
+# https://rapidapi.com/spoonacular/api/spoonacular-recipe-food-nutrition-v1
+# https://rapidapi.com/edamam/api/edamam-food-and-grocery-database
+
+# ========================================
+# Sports（体育）
+# ========================================
+# https://rapidapi.com/api-football/api/api-football
+# https://rapidapi.com/api-sports/api/api-basketball
+
+# ========================================
+# Music & Entertainment（音乐娱乐）
+# ========================================
+# https://rapidapi.com/apidojo/api/shazam
+# https://rapidapi.com/deezerdevs/api/deezer-1
+
+# ========================================
+# Location & Maps（地理位置）
+# ========================================
+# https://rapidapi.com/geoapify-gmbh-geoapify/api/geoapify
+# https://rapidapi.com/apininjas/api/geocoding-by-api-ninjas
+
+# ========================================
+# Business & Marketing（商业营销）
+# ========================================
+# https://rapidapi.com/hunter-api-hunter-api-default/api/hunter
+# https://rapidapi.com/clearbit/api/clearbit
+
+# ========================================
+# 你的自定义 API
+# ========================================
+# 在这里添加你想爬取的其他 RapidAPI...
+

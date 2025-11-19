@@ -1,0 +1,23 @@
+# RapidAPI URL 列表示例
+# 
+# 格式：每行一个 URL
+# 以 # 开头的是注释，会被忽略
+#
+# 使用方法：
+#   python batch_rapidapi.py rapidapi_urls_example.txt
+#   python batch_rapidapi.py rapidapi_urls_example.txt --use-selenium
+#   python batch_rapidapi.py rapidapi_urls_example.txt --transport sse --delay 10
+
+# Job Search API
+https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
+
+# Weather API
+# https://rapidapi.com/weatherapi/api/weatherapi-com
+
+# News API
+# https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher
+
+# 取消下面的注释来添加更多 API
+# https://rapidapi.com/provider/api/your-api-1
+# https://rapidapi.com/provider/api/your-api-2
+

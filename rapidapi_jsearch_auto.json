@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Jsearch",
+    "description": "RapidAPI: letscrape-6bRBa3QguO5/jsearch",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://jsearch.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "summary": "Job Search",
+        "description": "Search for jobs posted on any public job site across the web on the largest job aggregate in the world (Google for Jobs). Extensive filtering support and most options available on Google for Jobs.",
+        "operationId": "job_search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "Example value: developer jobs in chicago",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "num_pages",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "description": "Example value: us",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_posted",
+            "in": "query",
+            "required": false,
+            "description": "Example value: all",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/job-details": {
+      "get": {
+        "summary": "Job Details",
+        "description": "Get all job details, including additional information such as: application options / links, employer reviews and estimated salaries for similar jobs.",
+        "operationId": "job_details",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "query",
+            "required": false,
+            "description": "Example value: n20AgUu1KG0BGjzoAAAAAA==",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "description": "Example value: us",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estimated-salary": {
+      "get": {
+        "summary": "Job Salary",
+        "description": "Get estimated salaries / pay for a jobs around a location by job title and location. The salary estimation is returned for several periods, depending on data availability / relevance, and includes: hourly, daily, weekly, monthly, or yearly.",
+        "operationId": "job_salary",
+        "parameters": [
+          {
+            "name": "job_title",
+            "in": "query",
+            "required": false,
+            "description": "Example value: nodejs developer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "description": "Example value: new york",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_type",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ANY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "years_of_experience",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ALL",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/company-job-salary": {
+      "get": {
+        "summary": "Company Job Salary",
+        "description": "Get estimated job salaries/pay in a specific company by job title and optionally a location and experience level in years.",
+        "operationId": "company_job_salary",
+        "parameters": [
+          {
+            "name": "company",
+            "in": "query",
+            "required": false,
+            "description": "Example value: Amazon",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "job_title",
+            "in": "query",
+            "required": false,
+            "description": "Example value: software developer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_type",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ANY",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "years_of_experience",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ALL",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "JSearch API",
+    "description": "Fast, reliable, and comprehensive jobs API. Access job postings from Google for Jobs in real-time.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://jsearch.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "summary": "Job Search",
+        "description": "Search for jobs by query, location, and other filters",
+        "operationId": "job_search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query (e.g., 'Python developer in New York')",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "num_pages",
+            "in": "query",
+            "required": false,
+            "description": "Number of pages to return",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/job-details": {
+      "get": {
+        "summary": "Job Details",
+        "description": "Get detailed information about a specific job",
+        "operationId": "job_details",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "query",
+            "required": true,
+            "description": "Job ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIAuth": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}
+
+

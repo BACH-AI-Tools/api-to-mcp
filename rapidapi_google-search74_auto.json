@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Search74",
+    "description": "RapidAPI: herosAPI/google-search74",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://google-search74.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "search",
+        "description": "search",
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "Example value: Nike",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 10",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "related_keywords",
+            "in": "query",
+            "required": false,
+            "description": "Example value: true",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

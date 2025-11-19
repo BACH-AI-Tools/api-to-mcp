@@ -1,0 +1,15 @@
+[
+  {
+    "url": "https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch",
+    "name": "jsearch"
+  },
+  {
+    "url": "https://rapidapi.com/weatherapi/api/weatherapi-com",
+    "name": "weather-api"
+  },
+  {
+    "url": "https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher",
+    "name": "news-api"
+  }
+]
+

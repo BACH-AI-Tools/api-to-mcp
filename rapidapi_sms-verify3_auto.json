@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sms Verify3",
+    "description": "RapidAPI: Glavier/sms-verify3",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://sms-verify3.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/send-numeric-verify": {
+      "post": {
+        "summary": "Estimate Cost",
+        "description": "Estimate Cost",
+        "operationId": "estimate_cost",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "target": "+44 7459 034784",
+                  "estimate": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-f54f9bd4": {
+        "summary": "Send Verify SMS",
+        "description": "Send Verify SMS",
+        "operationId": "send_verify_sms",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "target": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

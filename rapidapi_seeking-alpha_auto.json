@@ -1,0 +1,1597 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Seeking Alpha",
+    "description": "RapidAPI: apidojo/seeking-alpha",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://seeking-alpha.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/symbols/get-options": {
+      "get": {
+        "summary": "symbols/get-options (Deprecated)",
+        "description": "Get optional prices",
+        "operationId": "symbols/get_options_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-momentum": {
+      "get": {
+        "summary": "symbols/get-momentum (Deprecated)",
+        "description": "Get momentum of specific symbol * This endpoint is deprecated,  you need to use .../symbols/v2/get-momentum endpoint instead.",
+        "operationId": "symbols/get_momentum_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-factor-grades": {
+      "get": {
+        "summary": "symbols/get-factor-grades (Deprecated)",
+        "description": "Get factor grades for specific symbol",
+        "operationId": "symbols/get_factor_grades_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-ratings": {
+      "get": {
+        "summary": "symbols/get-ratings (Deprecated)",
+        "description": "Get ratings data for specific symbol * This endpoint is replaced by .../symbols/get-factor-grades and .../symbols/get-quant-rating-histories",
+        "operationId": "symbols/get_ratings_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-top-holdings": {
+      "get": {
+        "summary": "symbols/get-top-holdings (Deprecated)",
+        "description": "Get top holdings of specific symbol",
+        "operationId": "symbols/get_top_holdings_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-analyst-ratings": {
+      "get": {
+        "summary": "symbols/get-analyst-ratings (Deprecated)",
+        "description": "Get Wall Street analyst ratings for specific symbol",
+        "operationId": "symbols/get_analyst_ratings_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-quant-rating-histories": {
+      "get": {
+        "summary": "symbols/get-quant-rating-histories (Deprecated)",
+        "description": "Get quant rating histories for specific symbol",
+        "operationId": "symbols/get_quant_rating_histories_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-key-data": {
+      "get": {
+        "summary": "symbols/get-key-data (Deprecated)",
+        "description": "Get key data of specific symbol",
+        "operationId": "symbols/get_key_data_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-analyst-price-target": {
+      "get": {
+        "summary": "symbols/get-analyst-price-target",
+        "description": "Get Wall Street analyst price target for specific symbol",
+        "operationId": "symbols/get_analyst_price_target",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-estimates": {
+      "get": {
+        "summary": "symbols/get-estimates",
+        "description": "Get estimated EPS/revenue of specific symbol by annual or quarterly",
+        "operationId": "symbols/get_estimates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-estimated-earning-announces": {
+      "get": {
+        "summary": "symbols/get-estimated-earning-announces",
+        "description": "Get estimated earning announces of a symbol",
+        "operationId": "symbols/get_estimated_earning_announces",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-earnings": {
+      "get": {
+        "summary": "symbols/get-earnings",
+        "description": "Get information  in Earnings tab of specific symbol",
+        "operationId": "symbols/get_earnings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-sector-metrics": {
+      "get": {
+        "summary": "symbols/get-sector-metrics",
+        "description": "Get Profitability, Growth, etc... metrics",
+        "operationId": "symbols/get_sector_metrics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-metric-grades": {
+      "get": {
+        "summary": "symbols/get-metric-grades",
+        "description": "Get Profitability, Growth, etc... grade",
+        "operationId": "symbols/get_metric_grades",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-metrics": {
+      "get": {
+        "summary": "symbols/get-metrics",
+        "description": "Get metrics of specific symbols",
+        "operationId": "symbols/get_metrics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-option-expirations": {
+      "get": {
+        "summary": "symbols/get-option-expirations",
+        "description": "Get option expirations to use with .../symbols/get-options endpoint",
+        "operationId": "symbols/get_option_expirations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-valuation": {
+      "get": {
+        "summary": "symbols/get-valuation",
+        "description": "Get valuation of specific symbols",
+        "operationId": "symbols/get_valuation",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-dividend-history": {
+      "get": {
+        "summary": "symbols/get-dividend-history",
+        "description": "Get dividend history of specific symbol",
+        "operationId": "symbols/get_dividend_history",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-historical-prices": {
+      "get": {
+        "summary": "symbols/get-historical-prices",
+        "description": "Get historical prices",
+        "operationId": "symbols/get_historical_prices",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-summary": {
+      "get": {
+        "summary": "symbols/get-summary",
+        "description": "Get summary information of specific symbol",
+        "operationId": "symbols/get_summary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-ownership": {
+      "get": {
+        "summary": "symbols/get-ownership",
+        "description": "Get ownership of specific symbol",
+        "operationId": "symbols/get_ownership",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/logout": {
+      "get": {
+        "summary": "accounts/logout",
+        "description": "Log out the server, and remove related data",
+        "operationId": "accounts/logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/screeners/get-results": {
+      "post": {
+        "summary": "screeners/get-results",
+        "description": "Get results of symbols by applied filters  relating to a screener",
+        "operationId": "screeners/get_results",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/screeners/detail": {
+      "get": {
+        "summary": "screeners/detail",
+        "description": "Get more information of a screener",
+        "operationId": "screeners/detail",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/get-contents": {
+      "get": {
+        "summary": "comments/get-contents",
+        "description": "This endpoint is used to get many comment's content at once by comment ids.",
+        "operationId": "comments/get_contents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/v2/list": {
+      "get": {
+        "summary": "comments/v2/list",
+        "description": "List all comments relating to a post or article or news. This endpoint only returns site map structure of comments relating to a post. You need to use along with .../comments/get-contents endpoint to get the contents.",
+        "operationId": "comments/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transcripts/v2/get-details": {
+      "get": {
+        "summary": "transcripts/v2/get-details",
+        "description": "Get transcript detail by id",
+        "operationId": "transcripts/v2/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/press-releases/get-details": {
+      "get": {
+        "summary": "press-releases/get-details",
+        "description": "Get press release detail by id",
+        "operationId": "press_releases/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/press-releases/v2/list": {
+      "get": {
+        "summary": "press-releases/v2/list",
+        "description": "List press releases of specific symbol",
+        "operationId": "press_releases/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/get-details": {
+      "get": {
+        "summary": "news/get-details",
+        "description": "Get analysis detail by id",
+        "operationId": "news/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/v2/list-trending": {
+      "get": {
+        "summary": "news/v2/list-trending",
+        "description": "List trending news",
+        "operationId": "news/v2/list_trending",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/v2/list-by-symbol": {
+      "get": {
+        "summary": "news/v2/list-by-symbol",
+        "description": "List news by symbol",
+        "operationId": "news/v2/list_by_symbol",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/v2/list": {
+      "get": {
+        "summary": "news/v2/list",
+        "description": "List news by category",
+        "operationId": "news/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/get-details": {
+      "get": {
+        "summary": "articles/get-details",
+        "description": "Get analysis detail by id",
+        "operationId": "articles/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/list-wall-street-breakfast": {
+      "get": {
+        "summary": "articles/list-wall-street-breakfast",
+        "description": "List articles by category",
+        "operationId": "articles/list_wall_street_breakfast",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/v2/list-trending": {
+      "get": {
+        "summary": "articles/v2/list-trending",
+        "description": "List trending articles",
+        "operationId": "articles/v2/list_trending",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/v2/get-details": {
+      "get": {
+        "summary": "analysis/v2/get-details",
+        "description": "Get analysis detail by id",
+        "operationId": "analysis/v2/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/v2/list": {
+      "get": {
+        "summary": "analysis/v2/list",
+        "description": "List analysis of specific symbol",
+        "operationId": "analysis/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-chart": {
+      "get": {
+        "summary": "symbols/get-chart",
+        "description": "Get data to draw chart for specific symbol",
+        "operationId": "symbols/get_chart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/v2/get-options": {
+      "get": {
+        "summary": "symbols/v2/get-options",
+        "description": "Get optional prices",
+        "operationId": "symbols/v2/get_options",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-peers": {
+      "get": {
+        "summary": "symbols/get-peers",
+        "description": "Get peers of specific symbol",
+        "operationId": "symbols/get_peers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-fundamentals": {
+      "get": {
+        "summary": "symbols/get-fundamentals",
+        "description": "Get fundamentals for specific symbol",
+        "operationId": "symbols/get_fundamentals",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-financials": {
+      "get": {
+        "summary": "symbols/get-financials",
+        "description": "Get financials for specific symbol",
+        "operationId": "symbols/get_financials",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-profile": {
+      "get": {
+        "summary": "symbols/get-profile",
+        "description": "Get profile information of specific symbol",
+        "operationId": "symbols/get_profile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/get-details": {
+      "get": {
+        "summary": "authors/get-details",
+        "description": "Get author details",
+        "operationId": "authors/get_details",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-day-watch": {
+      "get": {
+        "summary": "market/get-day-watch",
+        "description": "Get market day watch",
+        "operationId": "market/get_day_watch",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-dividend-investing": {
+      "get": {
+        "summary": "market/get-dividend-investing",
+        "description": "Get dividend investing",
+        "operationId": "market/get_dividend_investing",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-realtime-quotes": {
+      "get": {
+        "summary": "market/get-realtime-quotes",
+        "description": "Get real time quotes",
+        "operationId": "market/get_realtime_quotes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-meta-data": {
+      "get": {
+        "summary": "symbols/get-meta-data",
+        "description": "Get meta data of specific symbol",
+        "operationId": "symbols/get_meta_data",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auto-complete": {
+      "get": {
+        "summary": "auto-complete (Deprecated)",
+        "description": "Get suggested symbols, authors, etc... by provided word or phrase",
+        "operationId": "auto_complete_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/auto-complete": {
+      "get": {
+        "summary": "v2/auto-complete",
+        "description": "Get suggested symbols, authors, etc... by provided word or phrase",
+        "operationId": "v2/auto_complete",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/get-info": {
+      "get": {
+        "summary": "accounts/get-info",
+        "description": "Get account information with access token",
+        "operationId": "accounts/get_info",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/get-access-token": {
+      "post": {
+        "summary": "accounts/get-access-token",
+        "description": "Get access token by using own account from SA. The token is used to pass via request header while calling other endpoints. *The API does not support login by Google, or Apple.",
+        "operationId": "accounts/get_access_token",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-earnings-calendar": {
+      "get": {
+        "summary": "market/get-earnings-calendar",
+        "description": "Get earnings calendar",
+        "operationId": "market/get_earnings_calendar",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-analyst-recommendations": {
+      "get": {
+        "summary": "symbols/get-analyst-recommendations",
+        "description": "Get Wall Street analyst recommendations for specific symbol",
+        "operationId": "symbols/get_analyst_recommendations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-holdings": {
+      "get": {
+        "summary": "symbols/get-holdings",
+        "description": "Get information  in Holdings tab of specific symbol",
+        "operationId": "symbols/get_holdings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/v2/get-chart": {
+      "get": {
+        "summary": "symbols/v2/get-chart",
+        "description": "This endpoint reproduces public data and features in Charting tab.",
+        "operationId": "symbols/v2/get_chart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-sec-filings": {
+      "get": {
+        "summary": "symbols/get-sec-filings",
+        "description": "Get sec filings of specific symbol",
+        "operationId": "symbols/get_sec_filings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/v2/get-momentum": {
+      "get": {
+        "summary": "symbols/v2/get-momentum",
+        "description": "Get momentum of specific symbol",
+        "operationId": "symbols/v2/get_momentum",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symbols/get-splits": {
+      "get": {
+        "summary": "symbols/get-splits",
+        "description": "Get splits",
+        "operationId": "symbols/get_splits",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-realtime-prices": {
+      "get": {
+        "summary": "market/get-realtime-prices (Deprecated)",
+        "description": "* Use .../market/get-realtime-quotes instead. Get real time prices",
+        "operationId": "market/get_realtime_prices_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-equity": {
+      "get": {
+        "summary": "market/get-equity",
+        "description": "Get different market equities",
+        "operationId": "market/get_equity",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/list": {
+      "get": {
+        "summary": "news/list (Deprecated)",
+        "description": "List news of specific symbol",
+        "operationId": "news/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transcripts/list": {
+      "get": {
+        "summary": "transcripts/list (Deprecated)",
+        "description": "List transcripts of specific symbol",
+        "operationId": "transcripts/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/list": {
+      "get": {
+        "summary": "articles/list (Deprecated)",
+        "description": "List articles by category",
+        "operationId": "articles/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/v2/list": {
+      "get": {
+        "summary": "articles/v2/list",
+        "description": "List articles by category",
+        "operationId": "articles/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/market/get-market-open": {
+      "get": {
+        "summary": "market/get-market-open",
+        "description": "Get market open",
+        "operationId": "market/get_market_open",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transcripts/get-details": {
+      "get": {
+        "summary": "transcripts/get-details (Deprecating)",
+        "description": "Get transcript detail by id * This endpoint is deprecating. Use .../transcripts/v2/get-details instead",
+        "operationId": "transcripts/get_details_(deprecating)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/get-details": {
+      "get": {
+        "summary": "analysis/get-details (Deprecating)",
+        "description": "Get analysis detail by id * This endpoint is deprecating. Use .../analysis/v2/get-details instead",
+        "operationId": "analysis/get_details_(deprecating)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis/list": {
+      "get": {
+        "summary": "analysis/list (Deprecated)",
+        "description": "List analysis of specific symbol",
+        "operationId": "analysis/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/screener-filters/list": {
+      "get": {
+        "summary": "screener-filters/list",
+        "description": "List available filters to be used in .../screeners/get-results endpoint",
+        "operationId": "screener_filters/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/screeners/list": {
+      "get": {
+        "summary": "screeners/list",
+        "description": "List all screeners (Top Rated Stocks, Top Quant Dividend Stocks,  Top Yield Monsters, etc...)",
+        "operationId": "screeners/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/get-sub-comments": {
+      "get": {
+        "summary": "comments/get-sub-comments",
+        "description": "This endpoint is used to get sub or nested comments of another comment",
+        "operationId": "comments/get_sub_comments",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/press-releases/list": {
+      "get": {
+        "summary": "press-releases/list (Deprecated)",
+        "description": "List press releases of specific symbol",
+        "operationId": "press_releases/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/list-trending": {
+      "get": {
+        "summary": "articles/list-trending (Deprecated)",
+        "description": "List trending articles",
+        "operationId": "articles/list_trending_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transcripts/v2/list": {
+      "get": {
+        "summary": "transcripts/v2/list",
+        "description": "List transcripts of specific symbol",
+        "operationId": "transcripts/v2/list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/list": {
+      "get": {
+        "summary": "comments/list (Deprecated)",
+        "description": "List all comments relating to a post or article or news",
+        "operationId": "comments/list_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/list-trending": {
+      "get": {
+        "summary": "news/list-trending (Deprecated)",
+        "description": "List latest trending news",
+        "operationId": "news/list_trending_(deprecated)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}
