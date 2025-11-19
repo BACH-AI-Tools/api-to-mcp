@@ -1,0 +1,1419 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Meteostat",
+    "description": "RapidAPI: meteostat/meteostat",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://meteostat.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/point/monthly": {
+      "get": {
+        "summary": "Monthly Point Data",
+        "description": "This endpoint provides historical monthly statistics for a geographic location. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "monthly_point_data",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "description": "The point's latitude.",
+            "schema": {
+              "type": "number",
+              "example": "52.5244"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "description": "The point's longitude.",
+            "schema": {
+              "type": "number",
+              "example": "13.4105"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "query",
+            "required": false,
+            "description": "The point's elevation.",
+            "schema": {
+              "type": "number",
+              "example": "43"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-12-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 52.5244",
+            "schema": {
+              "type": "string",
+              "example": "52.5244"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 13.4105",
+            "schema": {
+              "type": "string",
+              "example": "13.4105"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 43",
+            "schema": {
+              "type": "string",
+              "example": "43"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-12-31",
+            "schema": {
+              "type": "string",
+              "example": "2020-12-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/monthly": {
+      "get": {
+        "summary": "Monthly Station Data",
+        "description": "This endpoint provides historical monthly statistics for a particular weather station. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "monthly_station_data",
+        "parameters": [
+          {
+            "name": "station",
+            "in": "query",
+            "required": true,
+            "description": "The Meteostat weather station identifier.",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-12-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 10637",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-12-31",
+            "schema": {
+              "type": "string",
+              "example": "2020-12-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/meta": {
+      "get": {
+        "summary": "Station Meta Data",
+        "description": "This endpoint provides meta data for a particular weather station.",
+        "operationId": "station_meta_data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "The Meteostat identifier of a weather station.",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "wmo",
+            "in": "query",
+            "required": false,
+            "description": "The WMO identifier of a weather station.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "icao",
+            "in": "query",
+            "required": false,
+            "description": "The ICAO identifier of a weather station.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 10637",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "wmo",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "icao",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/point/daily": {
+      "get": {
+        "summary": "Daily Point Data",
+        "description": "This endpoint provides historical daily statistics for a geographic location. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "daily_point_data",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "description": "The point's latitude.",
+            "schema": {
+              "type": "number",
+              "example": "43.6667"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "description": "The point's longitude.",
+            "schema": {
+              "type": "number",
+              "example": "-79.4"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "query",
+            "required": false,
+            "description": "The point's elevation.",
+            "schema": {
+              "type": "number",
+              "example": "184"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 43.6667",
+            "schema": {
+              "type": "string",
+              "example": "43.6667"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "header",
+            "required": true,
+            "description": "Example value: -79.4",
+            "schema": {
+              "type": "string",
+              "example": "-79.4"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 184",
+            "schema": {
+              "type": "string",
+              "example": "184"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-31",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/point/hourly": {
+      "get": {
+        "summary": "Hourly Point Data",
+        "description": "This endpoint provides historical hourly observations for a geographic location. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "hourly_point_data",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "description": "The point's latitude.",
+            "schema": {
+              "type": "number",
+              "example": "43.6667"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "description": "The point's longitude.",
+            "schema": {
+              "type": "number",
+              "example": "-79.4"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "query",
+            "required": false,
+            "description": "The point's elevation.",
+            "schema": {
+              "type": "number",
+              "example": "113"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "tz",
+            "in": "query",
+            "required": false,
+            "description": "The time zone according to the tz database. Default is UTC.",
+            "schema": {
+              "type": "string",
+              "example": "America/Toronto"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 43.6667",
+            "schema": {
+              "type": "string",
+              "example": "43.6667"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "header",
+            "required": true,
+            "description": "Example value: -79.4",
+            "schema": {
+              "type": "string",
+              "example": "-79.4"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 113",
+            "schema": {
+              "type": "string",
+              "example": "113"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "tz",
+            "in": "header",
+            "required": false,
+            "description": "Example value: America/Toronto",
+            "schema": {
+              "type": "string",
+              "example": "America/Toronto"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/normals": {
+      "get": {
+        "summary": "Station Climate Data",
+        "description": "This endpoint provides climate normals for a particular weather station.",
+        "operationId": "station_climate_data",
+        "parameters": [
+          {
+            "name": "station",
+            "in": "query",
+            "required": true,
+            "description": "The Meteostat weather station identifier.",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "The start year of the reference period.",
+            "schema": {
+              "type": "number",
+              "example": "1961"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "description": "The end year of the reference period.",
+            "schema": {
+              "type": "number",
+              "example": "1990"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 10637",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 1961",
+            "schema": {
+              "type": "string",
+              "example": "1961"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 1990",
+            "schema": {
+              "type": "string",
+              "example": "1990"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/point/normals": {
+      "get": {
+        "summary": "Point Climate Data",
+        "description": "This endpoint provides climate normals for any geo location.",
+        "operationId": "point_climate_data",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "description": "The point's latitude.",
+            "schema": {
+              "type": "number",
+              "example": "59.9127"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "description": "The point's longitude.",
+            "schema": {
+              "type": "number",
+              "example": "10.7461"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "query",
+            "required": false,
+            "description": "The point's elevation.",
+            "schema": {
+              "type": "number",
+              "example": "26"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "The start year of the reference period.",
+            "schema": {
+              "type": "number",
+              "example": "1961"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "description": "The end year of the reference period.",
+            "schema": {
+              "type": "number",
+              "example": "1990"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 59.9127",
+            "schema": {
+              "type": "string",
+              "example": "59.9127"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 10.7461",
+            "schema": {
+              "type": "string",
+              "example": "10.7461"
+            }
+          },
+          {
+            "name": "alt",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 26",
+            "schema": {
+              "type": "string",
+              "example": "26"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 1961",
+            "schema": {
+              "type": "string",
+              "example": "1961"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": false,
+            "description": "Example value: 1990",
+            "schema": {
+              "type": "string",
+              "example": "1990"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/nearby": {
+      "get": {
+        "summary": "Nearby Stations",
+        "description": "This endpoint provides a list of nearby weather stations for a given geographical location.",
+        "operationId": "nearby_stations",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "description": "The location's latitude.",
+            "schema": {
+              "type": "number",
+              "example": "51.5085"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "description": "The location's longitude.",
+            "schema": {
+              "type": "number",
+              "example": "-0.1257"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "The maximum number of weather stations. Default is 10.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "required": false,
+            "description": "The meter radius to search in. Default is 100000.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 51.5085",
+            "schema": {
+              "type": "string",
+              "example": "51.5085"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "header",
+            "required": true,
+            "description": "Example value: -0.1257",
+            "schema": {
+              "type": "string",
+              "example": "-0.1257"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/hourly": {
+      "get": {
+        "summary": "Hourly Station Data",
+        "description": "This endpoint provides historical hourly observations for a particular weather station. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "hourly_station_data",
+        "parameters": [
+          {
+            "name": "station",
+            "in": "query",
+            "required": true,
+            "description": "The Meteostat weather station identifier.",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "tz",
+            "in": "query",
+            "required": false,
+            "description": "The time zone according to the tz database. Default is UTC.",
+            "schema": {
+              "type": "string",
+              "example": "Europe/Berlin"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 10637",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "tz",
+            "in": "header",
+            "required": false,
+            "description": "Example value: Europe/Berlin",
+            "schema": {
+              "type": "string",
+              "example": "Europe/Berlin"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/daily": {
+      "get": {
+        "summary": "Daily Station Data",
+        "description": "This endpoint provides historical daily statistics for a particular weather station. The data provided through this endpoint is aggregated from multiple governmental interfaces.",
+        "operationId": "daily_station_data",
+        "parameters": [
+          {
+            "name": "station",
+            "in": "query",
+            "required": true,
+            "description": "The Meteostat weather station identifier.",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "description": "The start date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "description": "The end date of the period (YYYY-MM-DD).",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "description": "The time frequency of the records. Can be used for custom aggregation. Default is null.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "The unit system of the meteorological parameters. Default is metric.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "station",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 10637",
+            "schema": {
+              "type": "string",
+              "example": "10637"
+            }
+          },
+          {
+            "name": "start",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-01",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "name": "end",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 2020-01-31",
+            "schema": {
+              "type": "string",
+              "example": "2020-01-31"
+            }
+          },
+          {
+            "name": "model",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "freq",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "units",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

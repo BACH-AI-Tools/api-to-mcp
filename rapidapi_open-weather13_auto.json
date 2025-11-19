@@ -1,0 +1,260 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Open Weather13",
+    "description": "RapidAPI: worldapi/open-weather13",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://open-weather13.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/fivedaysforcast": {
+      "get": {
+        "summary": "V2 - 3-hour Forecast 5 days",
+        "description": "Get 5 days weather forecast data by Latitude \\u0026 Longitude",
+        "operationId": "v2___3_hour_forecast_5_days",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 40.730610",
+            "schema": {
+              "type": "string",
+              "example": "40.730610"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "required": true,
+            "description": "Example value: -73.935242",
+            "schema": {
+              "type": "string",
+              "example": "-73.935242"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "We support the following languages that you can use with the corresponded lang values: AFAfrikaans, ALAlbanian, ARArabic, AZAzerbaijani, BGBulgarian, CACatalan, CZCzech, DADanish, DEGerman, ELGreek, ENEnglish, EUBasque, FAPersian (Farsi), FIFinnish, FRFrench, GLGalician, HEHebrew, HIHindi, HRCroatian, HUHungarian, IDIndonesian, ITItalian, JAJapanese, KRKorean, LALatvian, LTLithuanian, MKMacedonian, NONorwegian, NLDutch, PLPolish, PTPortuguese, PT_BRPortuguês Brasil, RORomanian, RURussian, SESwed",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          },
+          {
+            "name": "latitude",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 40.730610",
+            "schema": {
+              "type": "string",
+              "example": "40.730610"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "header",
+            "required": true,
+            "description": "Example value: -73.935242",
+            "schema": {
+              "type": "string",
+              "example": "-73.935242"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "header",
+            "required": false,
+            "description": "Example value: EN",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/latlon": {
+      "get": {
+        "summary": "V2 - Current Weatherby Latitude \\u0026 Longitude",
+        "description": "Get Current Weather Data by Latitude \\u0026 Longitude [Documentation](https://rapidapi.com/worldapi/api/open-weather13/details)",
+        "operationId": "v2___current_weatherby_latitude_\\u0026_longitude",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 40.730610",
+            "schema": {
+              "type": "string",
+              "example": "40.730610"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "required": true,
+            "description": "Example value: -73.935242",
+            "schema": {
+              "type": "string",
+              "example": "-73.935242"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "We support the following languages that you can use with the corresponded lang values: AFAfrikaans, ALAlbanian, ARArabic, AZAzerbaijani, BGBulgarian, CACatalan, CZCzech, DADanish, DEGerman, ELGreek, ENEnglish, EUBasque, FAPersian (Farsi), FIFinnish, FRFrench, GLGalician, HEHebrew, HIHindi, HRCroatian, HUHungarian, IDIndonesian, ITItalian, JAJapanese, KRKorean, LALatvian, LTLithuanian, MKMacedonian, NONorwegian, NLDutch, PLPolish, PTPortuguese, PT_BRPortuguês Brasil, RORomanian, RURussian, SESwed",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          },
+          {
+            "name": "latitude",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 40.730610",
+            "schema": {
+              "type": "string",
+              "example": "40.730610"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "header",
+            "required": true,
+            "description": "Example value: -73.935242",
+            "schema": {
+              "type": "string",
+              "example": "-73.935242"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "header",
+            "required": false,
+            "description": "Example value: EN",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/city": {
+      "get": {
+        "summary": "V2 - Current Weather by city name",
+        "description": "Get Current Weather Data by City Name [Documentation](https://rapidapi.com/worldapi/api/open-weather13/details)",
+        "operationId": "v2___current_weather_by_city_name",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": true,
+            "description": "Example value: new york",
+            "schema": {
+              "type": "string",
+              "example": "new york"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "description": "We support the following languages that you can use with the corresponded lang values: AFAfrikaans, ALAlbanian, ARArabic, AZAzerbaijani, BGBulgarian, CACatalan, CZCzech, DADanish, DEGerman, ELGreek, ENEnglish, EUBasque, FAPersian (Farsi), FIFinnish, FRFrench, GLGalician, HEHebrew, HIHindi, HRCroatian, HUHungarian, IDIndonesian, ITItalian, JAJapanese, KRKorean, LALatvian, LTLithuanian, MKMacedonian, NONorwegian, NLDutch, PLPolish, PTPortuguese, PT_BRPortuguês Brasil, RORomanian, RURussian, SESwed",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          },
+          {
+            "name": "city",
+            "in": "header",
+            "required": true,
+            "description": "Example value: new york",
+            "schema": {
+              "type": "string",
+              "example": "new york"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "header",
+            "required": false,
+            "description": "Example value: EN",
+            "schema": {
+              "type": "string",
+              "example": "EN"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

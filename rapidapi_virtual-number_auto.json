@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Virtual Number",
+    "description": "RapidAPI: shameeraanuranga1991/virtual-number",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtual-number.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/e-sim/view-messages": {
+      "get": {
+        "summary": "View SMS history",
+        "description": "View All received SMS for the given number and country id",
+        "operationId": "view_sms_history",
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 7",
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 79034134722",
+            "schema": {
+              "type": "string",
+              "example": "79034134722"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "countryId",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 7",
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "name": "number",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 79034134722",
+            "schema": {
+              "type": "string",
+              "example": "79034134722"
+            }
+          },
+          {
+            "name": "page",
+            "in": "header",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/e-sim/country-numbers": {
+      "get": {
+        "summary": "Get Number By Country Id",
+        "description": "Get currently available numbers list by given country id",
+        "operationId": "get_number_by_country_id",
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 7",
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          },
+          {
+            "name": "countryId",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 7",
+            "schema": {
+              "type": "string",
+              "example": "7"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/e-sim/all-countries": {
+      "get": {
+        "summary": "Get All Countries",
+        "description": "Get the list of currently available countries",
+        "operationId": "get_all_countries",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

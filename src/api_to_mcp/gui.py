@@ -77,10 +77,18 @@ def main():
         with st.expander("📣 EMCP 推广配置"):
             st.markdown("自定义生成的 README 中的 EMCP 引流话术")
             
+            # EMCP 域名配置
+            emcp_domain = st.text_input(
+                "EMCP 平台域名",
+                value="https://sit-emcp.kaleido.guru",
+                help="配置 EMCP 平台的域名地址"
+            )
+            st.session_state['emcp_domain'] = emcp_domain
+            
             use_custom_promo = st.checkbox(
                 "使用自定义推广语句",
                 value=False,
-                help="勾选后可以编辑自定义的推广内容"
+                help="勾选后可以编辑自定义的推广内容（将覆盖上方域名配置）"
             )
             
             if use_custom_promo:
@@ -114,14 +122,14 @@ def main():
                     }
             else:
                 # 显示默认推广语句预览
-                st.info("使用默认推广语句：引导用户访问 https://sit-emcp.kaleido.guru")
+                st.info(f"使用默认推广语句：引导用户访问 {emcp_domain}")
                 if st.button("预览默认推广语句"):
-                    st.markdown("""
+                    st.markdown(f"""
 ### 默认推广语句（简体中文）
 
-**[EMCP](https://sit-emcp.kaleido.guru)** 是一个强大的 MCP 服务器管理平台，让您无需手动配置即可快速使用各种 MCP 服务器！
+**[EMCP]({emcp_domain})** 是一个强大的 MCP 服务器管理平台，让您无需手动配置即可快速使用各种 MCP 服务器！
 
-1. 🌐 访问 **[EMCP 平台](https://sit-emcp.kaleido.guru)**
+1. 🌐 访问 **[EMCP 平台]({emcp_domain})**
 2. 📝 注册并登录账号
 3. 🎯 进入 **MCP 广场**
 4. 🔍 搜索或找到本服务器
@@ -133,9 +141,101 @@ def main():
         
         # Azure OpenAI 配置
         with st.expander("🤖 Azure OpenAI 配置"):
-            azure_config = AzureOpenAIConfig.from_env()
-            st.info(f"**Endpoint**: {azure_config.endpoint}")
-            st.info(f"**Model**: {azure_config.deployment_name}")
+            st.markdown("用于 API 描述增强功能（可选）")
+            
+            # 从环境变量加载默认值
+            env_config = AzureOpenAIConfig.from_env()
+            
+            # 配置方式选择
+            config_mode = st.radio(
+                "配置方式",
+                options=["使用环境变量", "直接在界面配置"],
+                horizontal=True,
+                help="选择如何配置 Azure OpenAI"
+            )
+            
+            if config_mode == "使用环境变量":
+                # 显示环境变量配置状态
+                if env_config.endpoint and env_config.api_key:
+                    st.success("✅ Azure OpenAI 配置已从环境变量加载")
+                    st.info(f"**Endpoint**: {env_config.endpoint}")
+                    st.info(f"**API Key**: {'***' + env_config.api_key[-4:] if env_config.api_key else '未设置'}")
+                    st.info(f"**Model**: {env_config.deployment_name}")
+                    st.session_state['azure_config'] = env_config
+                else:
+                    st.warning("⚠️ Azure OpenAI 未配置")
+                    st.markdown("""
+请设置以下环境变量：
+
+```bash
+# Windows (PowerShell)
+$env:AZURE_OPENAI_ENDPOINT="https://your-endpoint.openai.azure.com"
+$env:AZURE_OPENAI_API_KEY="your-api-key"
+$env:AZURE_OPENAI_DEPLOYMENT="gpt-4o"
+
+# Linux/Mac
+export AZURE_OPENAI_ENDPOINT="https://your-endpoint.openai.azure.com"
+export AZURE_OPENAI_API_KEY="your-api-key"
+export AZURE_OPENAI_DEPLOYMENT="gpt-4o"
+```
+
+**注意**：不配置也可以使用，只是不会启用 LLM 描述增强功能。
+                    """)
+                    st.session_state['azure_config'] = None
+            
+            else:
+                # 直接在界面配置
+                st.info("💡 在此直接配置 Azure OpenAI（仅在当前会话有效）")
+                
+                azure_endpoint = st.text_input(
+                    "Endpoint",
+                    value=env_config.endpoint if env_config.endpoint else "",
+                    placeholder="https://your-endpoint.openai.azure.com",
+                    help="Azure OpenAI 端点地址",
+                    key="azure_endpoint_input"
+                )
+                
+                azure_api_key = st.text_input(
+                    "API Key",
+                    value=env_config.api_key if env_config.api_key else "",
+                    type="password",
+                    placeholder="输入您的 API Key",
+                    help="Azure OpenAI API 密钥",
+                    key="azure_api_key_input"
+                )
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    azure_deployment = st.text_input(
+                        "Deployment Name",
+                        value=env_config.deployment_name,
+                        placeholder="gpt-4o",
+                        help="模型部署名称",
+                        key="azure_deployment_input"
+                    )
+                with col2:
+                    azure_api_version = st.text_input(
+                        "API Version",
+                        value=env_config.api_version,
+                        placeholder="2024-02-15-preview",
+                        help="Azure OpenAI API 版本",
+                        key="azure_api_version_input"
+                    )
+                
+                # 保存到 session state
+                if azure_endpoint and azure_api_key:
+                    custom_config = AzureOpenAIConfig(
+                        endpoint=azure_endpoint,
+                        api_key=azure_api_key,
+                        deployment_name=azure_deployment,
+                        api_version=azure_api_version
+                    )
+                    st.session_state['azure_config'] = custom_config
+                    st.success("✅ Azure OpenAI 配置已设置")
+                else:
+                    st.session_state['azure_config'] = None
+                    if not azure_endpoint and not azure_api_key:
+                        st.info("ℹ️ 未配置 Azure OpenAI，将跳过描述增强功能")
     
     # 主要内容
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["📄 文件上传", "🌐 URL 导入", "🚀 RapidAPI", "🔥 批量爬取", "📊 历史记录"])
@@ -179,17 +279,24 @@ def main():
                         
                         # 增强
                         if enhance:
-                            with st.spinner("🤖 使用 LLM 增强描述..."):
-                                enhancer = DescriptionEnhancer()
-                                api_spec = enhancer.enhance_api_spec(api_spec)
-                            st.success("✅ 描述增强完成")
+                            azure_config = st.session_state.get('azure_config', None)
+                            if azure_config and azure_config.endpoint and azure_config.api_key:
+                                with st.spinner("🤖 使用 LLM 增强描述..."):
+                                    enhancer = DescriptionEnhancer(config=azure_config)
+                                    api_spec = enhancer.enhance_api_spec(api_spec)
+                                st.success("✅ 描述增强完成")
+                            else:
+                                st.warning("⚠️ Azure OpenAI 未配置，跳过描述增强")
+                                st.info("💡 请在左侧边栏配置 Azure OpenAI 以启用描述增强功能")
                         
                         # 生成
                         with st.spinner("🔨 生成 MCP 服务器..."):
                             custom_promo = st.session_state.get('custom_emcp_promo', None)
+                            emcp_domain = st.session_state.get('emcp_domain', 'https://sit-emcp.kaleido.guru')
                             generator = MCPGenerator(
                                 output_dir=output_dir,
-                                emcp_promotion=custom_promo
+                                emcp_promotion=custom_promo,
+                                emcp_domain=emcp_domain
                             )
                             mcp_server = generator.generate(
                                 api_spec,
@@ -268,17 +375,24 @@ def main():
                         
                         # 增强
                         if enhance:
-                            with st.spinner("🤖 使用 LLM 增强描述..."):
-                                enhancer = DescriptionEnhancer()
-                                api_spec = enhancer.enhance_api_spec(api_spec)
-                            st.success("✅ 描述增强完成")
+                            azure_config = st.session_state.get('azure_config', None)
+                            if azure_config and azure_config.endpoint and azure_config.api_key:
+                                with st.spinner("🤖 使用 LLM 增强描述..."):
+                                    enhancer = DescriptionEnhancer(config=azure_config)
+                                    api_spec = enhancer.enhance_api_spec(api_spec)
+                                st.success("✅ 描述增强完成")
+                            else:
+                                st.warning("⚠️ Azure OpenAI 未配置，跳过描述增强")
+                                st.info("💡 请在左侧边栏配置 Azure OpenAI 以启用描述增强功能")
                         
                         # 生成
                         with st.spinner("🔨 生成 MCP 服务器..."):
                             custom_promo = st.session_state.get('custom_emcp_promo', None)
+                            emcp_domain = st.session_state.get('emcp_domain', 'https://sit-emcp.kaleido.guru')
                             generator = MCPGenerator(
                                 output_dir=output_dir,
-                                emcp_promotion=custom_promo
+                                emcp_promotion=custom_promo,
+                                emcp_domain=emcp_domain
                             )
                             mcp_server = generator.generate(
                                 api_spec,
@@ -417,16 +531,22 @@ def main():
                                             
                                             # 增强描述
                                             if enhance:
-                                                with st.spinner("🤖 使用 LLM 增强描述..."):
-                                                    enhancer = DescriptionEnhancer()
-                                                    api_spec = enhancer.enhance_api_spec(api_spec)
-                                                st.success("✅ 描述增强完成")
+                                                azure_config = st.session_state.get('azure_config', None)
+                                                if azure_config and azure_config.endpoint and azure_config.api_key:
+                                                    with st.spinner("🤖 使用 LLM 增强描述..."):
+                                                        enhancer = DescriptionEnhancer(config=azure_config)
+                                                        api_spec = enhancer.enhance_api_spec(api_spec)
+                                                    st.success("✅ 描述增强完成")
+                                                else:
+                                                    st.warning("⚠️ Azure OpenAI 未配置，跳过描述增强")
                                             
                                             # 生成 MCP
                                             custom_promo = st.session_state.get('custom_emcp_promo', None)
+                                            emcp_domain = st.session_state.get('emcp_domain', 'https://sit-emcp.kaleido.guru')
                                             generator = MCPGenerator(
                                                 output_dir=output_dir,
-                                                emcp_promotion=custom_promo
+                                                emcp_promotion=custom_promo,
+                                                emcp_domain=emcp_domain
                                             )
                                             # 使用正确的键名
                                             default_name = api_info.get('api') or api_info.get('api_name', 'api')
@@ -649,9 +769,11 @@ def main():
                                 api_spec = parser.parse_dict(spec)
                                 
                                 custom_promo = st.session_state.get('custom_emcp_promo', None)
+                                emcp_domain = st.session_state.get('emcp_domain', 'https://sit-emcp.kaleido.guru')
                                 generator = MCPGenerator(
                                     output_dir=output_dir,
-                                    emcp_promotion=custom_promo
+                                    emcp_promotion=custom_promo,
+                                    emcp_domain=emcp_domain
                                 )
                                 mcp_server = generator.generate(
                                     api_spec,

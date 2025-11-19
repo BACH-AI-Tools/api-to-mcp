@@ -12,10 +12,11 @@ from ..models import APISpec, APIEndpoint, MCPServer, MCPTool
 class MCPGenerator:
     """MCP 服务器生成器"""
     
-    def __init__(self, output_dir: str = "generated_mcps", package_prefix: str = "bach", emcp_promotion: Optional[Dict[str, str]] = None):
+    def __init__(self, output_dir: str = "generated_mcps", package_prefix: str = "bach", emcp_promotion: Optional[Dict[str, str]] = None, emcp_domain: str = "https://sit-emcp.kaleido.guru"):
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.package_prefix = package_prefix  # PyPI 包名前缀
+        self.emcp_domain = emcp_domain  # EMCP 平台域名
         
         # EMCP 平台引流话术
         self.emcp_promotion = emcp_promotion or self._get_default_emcp_promotion()
@@ -26,16 +27,16 @@ class MCPGenerator:
     def _get_default_emcp_promotion(self) -> dict:
         """获取默认的 EMCP 平台引流话术（中英繁）"""
         return {
-            'zh': """## 🚀 使用 EMCP 平台快速体验
+            'zh': f"""## 🚀 使用 EMCP 平台快速体验
 
-**[EMCP](https://sit-emcp.kaleido.guru)** 是一个强大的 MCP 服务器管理平台，让您无需手动配置即可快速使用各种 MCP 服务器！
+**[EMCP]({self.emcp_domain})** 是一个强大的 MCP 服务器管理平台，让您无需手动配置即可快速使用各种 MCP 服务器！
 
 ### 快速开始：
 
-1. 🌐 访问 **[EMCP 平台](https://sit-emcp.kaleido.guru)**
+1. 🌐 访问 **[EMCP 平台]({self.emcp_domain})**
 2. 📝 注册并登录账号
 3. 🎯 进入 **MCP 广场**，浏览所有可用的 MCP 服务器
-4. 🔍 搜索或找到本服务器（`{package_name}`）
+4. 🔍 搜索或找到本服务器（`{{package_name}}`）
 5. 🎉 点击 **"安装 MCP"** 按钮
 6. ✅ 完成！即可在您的应用中使用
 
@@ -47,18 +48,18 @@ class MCPGenerator:
 - 🚀 **一键安装**：MCP 广场提供丰富的服务器选择
 - 📊 **使用统计**：实时查看服务调用情况
 
-立即访问 **[EMCP 平台](https://sit-emcp.kaleido.guru)** 开始您的 MCP 之旅！
+立即访问 **[EMCP 平台]({self.emcp_domain})** 开始您的 MCP 之旅！
 """,
-            'en': """## 🚀 Quick Start with EMCP Platform
+            'en': f"""## 🚀 Quick Start with EMCP Platform
 
-**[EMCP](https://sit-emcp.kaleido.guru)** is a powerful MCP server management platform that allows you to quickly use various MCP servers without manual configuration!
+**[EMCP]({self.emcp_domain})** is a powerful MCP server management platform that allows you to quickly use various MCP servers without manual configuration!
 
 ### Quick Start:
 
-1. 🌐 Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)**
+1. 🌐 Visit **[EMCP Platform]({self.emcp_domain})**
 2. 📝 Register and login
 3. 🎯 Go to **MCP Marketplace** to browse all available MCP servers
-4. 🔍 Search or find this server (`{package_name}`)
+4. 🔍 Search or find this server (`{{package_name}}`)
 5. 🎉 Click the **"Install MCP"** button
 6. ✅ Done! You can now use it in your applications
 
@@ -70,18 +71,18 @@ class MCPGenerator:
 - 🚀 **One-Click Install**: Rich selection of servers in MCP Marketplace
 - 📊 **Usage Statistics**: Real-time service call monitoring
 
-Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP journey!
+Visit **[EMCP Platform]({self.emcp_domain})** now to start your MCP journey!
 """,
-            'zh_tw': """## 🚀 使用 EMCP 平台快速體驗
+            'zh_tw': f"""## 🚀 使用 EMCP 平台快速體驗
 
-**[EMCP](https://sit-emcp.kaleido.guru)** 是一個強大的 MCP 伺服器管理平台，讓您無需手動配置即可快速使用各種 MCP 伺服器！
+**[EMCP]({self.emcp_domain})** 是一個強大的 MCP 伺服器管理平台，讓您無需手動配置即可快速使用各種 MCP 伺服器！
 
 ### 快速開始：
 
-1. 🌐 造訪 **[EMCP 平台](https://sit-emcp.kaleido.guru)**
+1. 🌐 造訪 **[EMCP 平台]({self.emcp_domain})**
 2. 📝 註冊並登入帳號
 3. 🎯 進入 **MCP 廣場**，瀏覽所有可用的 MCP 伺服器
-4. 🔍 搜尋或找到本伺服器（`{package_name}`）
+4. 🔍 搜尋或找到本伺服器（`{{package_name}}`）
 5. 🎉 點擊 **「安裝 MCP」** 按鈕
 6. ✅ 完成！即可在您的應用中使用
 
@@ -93,7 +94,7 @@ Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP j
 - 🚀 **一鍵安裝**：MCP 廣場提供豐富的伺服器選擇
 - 📊 **使用統計**：即時查看服務調用情況
 
-立即造訪 **[EMCP 平台](https://sit-emcp.kaleido.guru)** 開始您的 MCP 之旅！
+立即造訪 **[EMCP 平台]({self.emcp_domain})** 開始您的 MCP 之旅！
 """
         }
     
@@ -359,12 +360,24 @@ Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP j
             if path not in openapi["paths"]:
                 openapi["paths"][path] = {}
             
+            # 处理响应定义，移除过于严格的 type 限制
+            responses = endpoint.responses or {"200": {"description": "Success"}}
+            # 修改响应 schema，移除 type 字段以支持灵活的返回类型
+            if "200" in responses and "content" in responses["200"]:
+                content = responses["200"]["content"]
+                if "application/json" in content and "schema" in content["application/json"]:
+                    schema = content["application/json"]["schema"]
+                    # 如果 schema 只定义了 type: object，移除它以允许任意类型
+                    if schema.get("type") == "object" and len(schema) == 1:
+                        # 不指定 type，让 FastMCP 自动处理
+                        content["application/json"]["schema"] = {}
+            
             operation = {
                 "summary": endpoint.enhanced_summary or endpoint.summary or "",
                 "description": endpoint.enhanced_description or endpoint.description or "",
                 "operationId": endpoint.operation_id or f"{endpoint.method.lower()}_{path.replace('/', '_')}",
                 "parameters": [],
-                "responses": endpoint.responses or {"200": {"description": "Success"}}
+                "responses": responses
             }
             
             # 添加参数
@@ -453,13 +466,11 @@ if API_KEY:
 {% if api_spec.base_url %}
 client = httpx.AsyncClient(
     base_url="{{ api_spec.base_url }}", 
-    timeout=30.0,
-    headers=default_headers
+    timeout=30.0
 )
 {% else %}
 client = httpx.AsyncClient(
-    timeout=30.0,
-    headers=default_headers
+    timeout=30.0
 )
 {% endif %}
 
@@ -471,6 +482,34 @@ mcp = FastMCP.from_openapi(
     name="{{ server.name }}",
     version=__version__
 )
+
+{% if api_spec.base_url and 'rapidapi.com' in api_spec.base_url %}
+# 注册请求拦截器，为所有请求添加 RapidAPI headers
+_original_request = client.request
+
+async def _add_rapidapi_headers(method, url, **kwargs):
+    """拦截所有请求，添加必需的 RapidAPI headers"""
+    # 确保 headers 存在
+    if 'headers' not in kwargs:
+        kwargs['headers'] = {}
+    
+    # 添加 RapidAPI 必需的 headers
+    if API_KEY:
+        kwargs['headers']['X-RapidAPI-Key'] = API_KEY
+        kwargs['headers']['X-RapidAPI-Host'] = "{{ api_spec.base_url.replace('https://', '').replace('http://', '') }}"
+    else:
+        print("⚠️  警告: API_KEY 未设置，请求可能失败")
+    
+    # 对于 POST/PUT/PATCH，添加 Content-Type
+    if method.upper() in ['POST', 'PUT', 'PATCH']:
+        if 'Content-Type' not in kwargs['headers']:
+            kwargs['headers']['Content-Type'] = 'application/json'
+    
+    return await _original_request(method, url, **kwargs)
+
+# 替换 request 方法
+client.request = _add_rapidapi_headers
+{% endif %}
 
 def main():
     """主入口点"""
@@ -537,8 +576,6 @@ pattern = '__version__ = "(?P<version>[^"]+)"'
 README_TEMPLATE = '''# {{ api_spec.title }} MCP Server
 
 {% if lang == 'zh' %}[English](./README_EN.md) | 简体中文 | [繁體中文](./README_ZH-TW.md){% elif lang == 'en' %}English | [简体中文](./README.md) | [繁體中文](./README_ZH-TW.md){% elif lang == 'zh_tw' %}[English](./README_EN.md) | [简体中文](./README.md) | 繁體中文{% endif %}
-
-{% if lang == 'zh' %}{{ api_spec.title }} 的 MCP 服务器，由 API-to-MCP 工具自动生成。{% elif lang == 'en' %}MCP Server for {{ api_spec.title }}, automatically generated by API-to-MCP tool.{% elif lang == 'zh_tw' %}{{ api_spec.title }} 的 MCP 伺服器，由 API-to-MCP 工具自動生成。{% endif %}
 
 {{ emcp_promotion }}
 

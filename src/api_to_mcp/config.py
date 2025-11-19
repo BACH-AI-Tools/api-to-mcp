@@ -8,9 +8,18 @@ import os
 
 @dataclass
 class AzureOpenAIConfig:
-    """Azure OpenAI 配置"""
-    endpoint: str = "https://jinderu.openai.azure.com"
-    api_key: str = "b446430bf5f44e69bfed45a581845bb4"
+    """Azure OpenAI 配置
+    
+    ⚠️ 重要：请通过环境变量设置敏感信息，不要在代码中硬编码！
+    
+    环境变量：
+    - AZURE_OPENAI_ENDPOINT: Azure OpenAI 端点
+    - AZURE_OPENAI_API_KEY: Azure OpenAI API 密钥
+    - AZURE_OPENAI_DEPLOYMENT: 部署名称（默认：gpt-4o）
+    - AZURE_OPENAI_API_VERSION: API 版本（默认：2024-02-15-preview）
+    """
+    endpoint: Optional[str] = None
+    api_key: Optional[str] = None
     deployment_name: str = "gpt-4o"
     api_version: str = "2024-02-15-preview"
     
@@ -18,8 +27,8 @@ class AzureOpenAIConfig:
     def from_env(cls) -> "AzureOpenAIConfig":
         """从环境变量加载配置"""
         return cls(
-            endpoint=os.getenv("AZURE_OPENAI_ENDPOINT", cls.endpoint),
-            api_key=os.getenv("AZURE_OPENAI_API_KEY", cls.api_key),
+            endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
             deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT", cls.deployment_name),
             api_version=os.getenv("AZURE_OPENAI_API_VERSION", cls.api_version),
         )

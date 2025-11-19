@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Snow Day Probability Api",
+    "description": "RapidAPI: devify/snow-day-probability-api",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://snow-day-probability-api.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Snow Probability",
+        "description": "Snow Day Probability predicts the likelihood of school closures due to snowfall and severe winter weather using real-time weather data and machine learning algorithms.",
+        "operationId": "snow_probability",
+        "parameters": [
+          {
+            "name": "zipcode",
+            "in": "query",
+            "required": true,
+            "description": "Example value: 59716",
+            "schema": {
+              "type": "number",
+              "example": "59716"
+            }
+          },
+          {
+            "name": "zipcode",
+            "in": "header",
+            "required": true,
+            "description": "Example value: 59716",
+            "schema": {
+              "type": "string",
+              "example": "59716"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}
