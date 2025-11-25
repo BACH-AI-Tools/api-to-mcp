@@ -1,0 +1,1042 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Youtube138",
+    "description": "RapidAPI: Glavier/youtube138",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://youtube138.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/auto-complete/": {
+      "get": {
+        "summary": "Auto Complete",
+        "description": "Auto Complete",
+        "operationId": "auto_complete",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Query for suggestions",
+            "schema": {
+              "type": "string",
+              "example": "desp"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/trending": {
+      "get": {
+        "summary": "Trending",
+        "description": "Trending",
+        "operationId": "trending",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/home/": {
+      "get": {
+        "summary": "Home",
+        "description": "Home",
+        "operationId": "home",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/": {
+      "get": {
+        "summary": "Search",
+        "description": "Search",
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "example": "despacito"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/channels/": {
+      "get": {
+        "summary": "Channel Channels",
+        "description": "Channel Channels",
+        "operationId": "channel_channels",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Channel ID",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "description": "Filter key or token, default: all_collections Keys you can enter: all_collections: Returns channel collections subscriptions: Returns subscribed channels or custom collection token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/search/": {
+      "get": {
+        "summary": "Channel Search",
+        "description": "Channel Search",
+        "operationId": "channel_search",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Channel ID",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "example": "john cena"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/playlists/": {
+      "get": {
+        "summary": "Channel Playlists",
+        "description": "Channel Playlists",
+        "operationId": "channel_playlists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Channel ID",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "description": "Filter key or token, default: all_collections Keys you can enter: all_collections: Returns playlist collections created_playlists_newest: Returns created playlists (by newest) created_playlists_last_video_added: Returns created playlists (by last video added) saved_playlists: Returns saved playlists or custom collection token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/details/": {
+      "get": {
+        "summary": "Channel Details",
+        "description": "Channel Details",
+        "operationId": "channel_details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Channel ID or URL e.g. UCJ5v_MCY6GNUBTO8-D3XoAg e.g. https://www.youtube.com/@WWE",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/community/": {
+      "get": {
+        "summary": "Channel Community",
+        "description": "Channel Community",
+        "operationId": "channel_community",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Channel ID",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/videos/": {
+      "get": {
+        "summary": "Channel Videos",
+        "description": "Channel Videos",
+        "operationId": "channel_videos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Channel ID",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "description": "Filter key, default: videos_latest Keys you can enter: videos_latest: Returns videos (by latest) streams_latest: Returns live streams (by latest) shorts_latest: Returns short videos (by latest) live_now: Returns current live streams",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/channel-details": {
+      "get": {
+        "summary": "Channel Details (v2)",
+        "description": "Channel Details (v2)",
+        "operationId": "channel_details_(v2)",
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "query",
+            "required": true,
+            "description": "Channel ID or URL e.g. UCJ5v_MCY6GNUBTO8-D3XoAg e.g. https://www.youtube.com/@WWE",
+            "schema": {
+              "type": "string",
+              "example": "UCJ5v_MCY6GNUBTO8-D3XoAg"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/comments/": {
+      "get": {
+        "summary": "Video Comments",
+        "description": "Video Comments",
+        "operationId": "video_comments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Video ID",
+            "schema": {
+              "type": "string",
+              "example": "kJQP7kiw5Fk"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/related-contents/": {
+      "get": {
+        "summary": "Video Related Contents",
+        "description": "Video Related Contents",
+        "operationId": "video_related_contents",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Video ID",
+            "schema": {
+              "type": "string",
+              "example": "kJQP7kiw5Fk"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/streaming-data/": {
+      "get": {
+        "summary": "Video Streaming Data",
+        "description": "Video Streaming Data",
+        "operationId": "video_streaming_data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Video ID",
+            "schema": {
+              "type": "string",
+              "example": "VyHV0BRtdxo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/details/": {
+      "get": {
+        "summary": "Video Details",
+        "description": "Video Details",
+        "operationId": "video_details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Video ID or URL e.g. kJQP7kiw5Fk e.g. https://youtu.be/kJQP7kiw5Fk e.g. https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+            "schema": {
+              "type": "string",
+              "example": "kJQP7kiw5Fk"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/video-details": {
+      "get": {
+        "summary": "Video Details (v2)",
+        "description": "Video Details (v2)",
+        "operationId": "video_details_(v2)",
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "required": true,
+            "description": "Video ID or URL e.g. kJQP7kiw5Fk e.g. https://youtu.be/kJQP7kiw5Fk e.g. https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+            "schema": {
+              "type": "string",
+              "example": "kJQP7kiw5Fk"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/community-post/comments/": {
+      "get": {
+        "summary": "Community Post Comments",
+        "description": "Community Post Comments",
+        "operationId": "community_post_comments",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": true,
+            "description": "Cursor token You can get it from the Community Post Details endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/community-post/details/": {
+      "get": {
+        "summary": "Community Post Details",
+        "description": "Community Post Details",
+        "operationId": "community_post_details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Community post ID",
+            "schema": {
+              "type": "string",
+              "example": "UgkxCWeKPiIOLsnh_5a0MPHWCmYgbhifgwIZ"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlist/videos/": {
+      "get": {
+        "summary": "Playlist Videos",
+        "description": "Playlist Videos",
+        "operationId": "playlist_videos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "Playlist ID",
+            "schema": {
+              "type": "string",
+              "example": "PLcirGkCPmbmFeQ1sm4wFciF03D_EroIfr"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Cursor token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlist/details/": {
+      "get": {
+        "summary": "Playlist Details",
+        "description": "Playlist Details",
+        "operationId": "playlist_details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "Playlist ID",
+            "schema": {
+              "type": "string",
+              "example": "PLcirGkCPmbmFeQ1sm4wFciF03D_EroIfr"
+            }
+          },
+          {
+            "name": "hl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: en",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          {
+            "name": "gl",
+            "in": "query",
+            "required": false,
+            "description": "Example value: US",
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

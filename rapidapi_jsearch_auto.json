@@ -20,35 +20,50 @@
           {
             "name": "query",
             "in": "query",
-            "required": false,
-            "description": "Example value: developer jobs in chicago",
+            "required": true,
+            "description": "Free-form jobs search query. It is highly recommended to include job title and location as part of the query, see query examples below. Examples: web development jobs in chicago marketing manager in new york via linkedin",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "developer jobs in chicago"
             }
           },
           {
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "Example value: 1",
+            "description": "Page to return (each page includes up to 10 results). Default: 1 Allowed values: 1-50",
             "schema": {
-              "type": "integer"
+              "type": "number",
+              "default": "1",
+              "example": "1"
             }
           },
           {
             "name": "num_pages",
             "in": "query",
             "required": false,
-            "description": "Example value: 1",
+            "description": "Number of pages to return, starting from page. Default: 1 Allowed values: 1-50 Note: requests for more than one page and up to 10 pages are charged x2 and requests for more than 10 pages are charged 3x.",
             "schema": {
-              "type": "integer"
+              "type": "number",
+              "default": "1",
+              "example": "1"
             }
           },
           {
             "name": "country",
             "in": "query",
             "required": false,
-            "description": "Example value: us",
+            "description": "Country code of the country from which to return job postings. Please note that this parameter must be set in order to get jobs in a specific country, for example, to query for software developer jobs in Berlin, one should add country=de to the request - e.g. query=software+developers+in+berlin&country=de. Default: us Allowed values: See https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2",
+            "schema": {
+              "type": "string",
+              "example": "us"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "description": "Language code in which to return job postings. Leave empty to use the primary language in the specified country (country parameter). Note that each country supports certain languages. In case a language not supported by the specified country is used, it is likely that no results will be returned. Allowed values: See https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes",
             "schema": {
               "type": "string"
             }
@@ -57,7 +72,61 @@
             "name": "date_posted",
             "in": "query",
             "required": false,
-            "description": "Example value: all",
+            "description": "Find jobs posted within the time you specify. Default: all Allowed values: all, today, 3days, week, month",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "work_from_home",
+            "in": "query",
+            "required": false,
+            "description": "Example value: ",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "employment_types",
+            "in": "query",
+            "required": false,
+            "description": "Find jobs of particular employment types, specified as a comma delimited list of the following values: FULLTIME, CONTRACTOR, PARTTIME, INTERN.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "job_requirements",
+            "in": "query",
+            "required": false,
+            "description": "Find jobs with specific requirements, specified as a comma delimited list of the following values: under_3_years_experience, more_than_3_years_experience, no_experience, no_degree.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "required": false,
+            "description": "Return jobs within a certain distance from location as specified as part of the query (in km). This internally sent as the Google \\\"lrad\\\" parameter and although it might affect the results, it is not strictly followed by Google for Jobs.",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "exclude_job_publishers",
+            "in": "query",
+            "required": false,
+            "description": "Exclude jobs published by specific publishers, specified as a comma (,) separated list of publishers to exclude. Example: BeeBe,Dice",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "A comma separated list of job fields to include in the response (field projection). By default all fields are returned. Example: employer_name,job_publisher,job_title,job_country",
             "schema": {
               "type": "string"
             }
@@ -86,17 +155,37 @@
           {
             "name": "job_id",
             "in": "query",
-            "required": false,
-            "description": "Example value: n20AgUu1KG0BGjzoAAAAAA==",
+            "required": true,
+            "description": "Job Id of the job for which to get details. Batching of up to 20 Job Ids is supported by separating multiple Job Ids by comma (,). Note that each Job Id in a batch request is counted as a request for quota calculation.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "n20AgUu1KG0BGjzoAAAAAA=="
             }
           },
           {
             "name": "country",
             "in": "query",
             "required": false,
-            "description": "Example value: us",
+            "description": "Country code of the country from which to return job posting. Default: us Allowed values: See https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2",
+            "schema": {
+              "type": "string",
+              "example": "us"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "description": "Language code in which to return job postings. Leave empty to use the primary language in the specified country (country parameter). Allowed values: See https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "A comma separated list of job fields to include in the response (field projection). By default all fields are returned. Example: employer_name,job_publisher,job_title,job_country",
             "schema": {
               "type": "string"
             }
@@ -125,26 +214,28 @@
           {
             "name": "job_title",
             "in": "query",
-            "required": false,
-            "description": "Example value: nodejs developer",
+            "required": true,
+            "description": "Job title for which to get salary estimation.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "nodejs developer"
             }
           },
           {
             "name": "location",
             "in": "query",
-            "required": false,
-            "description": "Example value: new york",
+            "required": true,
+            "description": "Free-text location/area in which to get salary estimation.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "new york"
             }
           },
           {
             "name": "location_type",
             "in": "query",
             "required": false,
-            "description": "Example value: ANY",
+            "description": "Specify the type of the location you are looking to get salary estimation for additional accuracy. Allowed values: ANY, CITY, STATE, COUNTRY Default: ANY",
             "schema": {
               "type": "string"
             }
@@ -153,7 +244,16 @@
             "name": "years_of_experience",
             "in": "query",
             "required": false,
-            "description": "Example value: ALL",
+            "description": "Get job estimation for a specific experience level range (years). Allowed values: ALL, LESS_THAN_ONE, ONE_TO_THREE, FOUR_TO_SIX, SEVEN_TO_NINE, TEN_TO_FOURTEEN, ABOVE_FIFTEEN Default: ALL",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "A comma separated list of job salary fields to include in the response (field projection). By default all fields are returned. Example: job_title,median_salary,location",
             "schema": {
               "type": "string"
             }
@@ -182,17 +282,28 @@
           {
             "name": "company",
             "in": "query",
-            "required": false,
-            "description": "Example value: Amazon",
+            "required": true,
+            "description": "The company name for which to get salary information (e.g. Amazon).",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "Amazon"
             }
           },
           {
             "name": "job_title",
             "in": "query",
+            "required": true,
+            "description": "Job title for which to get salary estimation.",
+            "schema": {
+              "type": "string",
+              "example": "software developer"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
             "required": false,
-            "description": "Example value: software developer",
+            "description": "Free-text location/area in which to get salary estimation.",
             "schema": {
               "type": "string"
             }
@@ -201,7 +312,7 @@
             "name": "location_type",
             "in": "query",
             "required": false,
-            "description": "Example value: ANY",
+            "description": "Specify the type of the location you are looking to get salary estimation for additional accuracy. Allowed values: ANY, CITY, STATE, COUNTRY Default: ANY",
             "schema": {
               "type": "string"
             }
@@ -210,7 +321,7 @@
             "name": "years_of_experience",
             "in": "query",
             "required": false,
-            "description": "Example value: ALL",
+            "description": "Get job estimation for a specific experience level range (years). Allowed values: ALL, LESS_THAN_ONE, ONE_TO_THREE, FOUR_TO_SIX, SEVEN_TO_NINE, TEN_TO_FOURTEEN, ABOVE_FIFTEEN Default: ALL",
             "schema": {
               "type": "string"
             }

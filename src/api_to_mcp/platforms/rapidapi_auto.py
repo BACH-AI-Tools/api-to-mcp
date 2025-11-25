@@ -57,20 +57,34 @@ class RapidAPIAutoExtractor:
         # 3. 使用 Selenium 爬取每个端点的参数和响应
         print("🌐 使用 Selenium 爬取参数和响应...")
         
-        from .rapidapi_selenium_scraper import scrape_with_selenium
-        
-        base_url = rapidapi_url
-        enriched_endpoints = scrape_with_selenium(
-            base_url,
-            endpoints,
-            headless=headless
-        )
-        
-        # 4. 构建完整 OpenAPI
-        parsed_data['endpoints'] = enriched_endpoints
-        openapi = parser.build_openapi_from_data(parsed_data, api_info)
-        
-        return openapi
+        try:
+            from .rapidapi_selenium_scraper import scrape_with_selenium
+            
+            base_url = rapidapi_url
+            enriched_endpoints = scrape_with_selenium(
+                base_url,
+                endpoints,
+                headless=headless,
+                enable_screenshots=True  # 启用自动截图
+            )
+            
+            # 统计参数获取情况
+            params_count = sum(1 for ep in enriched_endpoints if ep.get('parameters'))
+            print(f"✅ 成功获取 {params_count}/{len(enriched_endpoints)} 个端点的参数")
+            
+            # 4. 构建完整 OpenAPI
+            parsed_data['endpoints'] = enriched_endpoints
+            openapi = parser.build_openapi_from_data(parsed_data, api_info)
+            
+            return openapi
+            
+        except Exception as e:
+            print(f"❌ Selenium 爬取失败: {type(e).__name__}: {str(e)}")
+            print(f"💡 回退到基础方法（无参数信息）")
+            
+            # 回退到基础端点信息
+            openapi = parser.build_openapi_from_data(parsed_data, api_info)
+            return openapi
     
     def auto_extract(self, rapidapi_url: str, verify_ssl: bool = True) -> Dict[str, Any]:
         """
@@ -474,8 +488,21 @@ class RapidAPIAutoExtractor:
         }
 
 
-def auto_extract_rapidapi(rapidapi_url: str, verify_ssl: bool = True) -> Dict[str, Any]:
-    """自动从 RapidAPI 提取并构建 OpenAPI 规范"""
+def auto_extract_rapidapi(rapidapi_url: str, verify_ssl: bool = True, use_selenium: bool = False, headless: bool = True) -> Dict[str, Any]:
+    """自动从 RapidAPI 提取并构建 OpenAPI 规范
+    
+    Args:
+        rapidapi_url: RapidAPI 页面 URL
+        verify_ssl: 是否验证 SSL 证书
+        use_selenium: 是否使用 Selenium 进行提取（可获取更完整的参数信息）
+        headless: 是否无头模式（True=不显示浏览器，False=显示浏览器）
+    
+    Returns:
+        OpenAPI 规范字典
+    """
     extractor = RapidAPIAutoExtractor()
-    return extractor.auto_extract(rapidapi_url, verify_ssl)
+    if use_selenium:
+        return extractor.auto_extract_with_selenium(rapidapi_url, verify_ssl, headless=headless)
+    else:
+        return extractor.auto_extract(rapidapi_url, verify_ssl)
 

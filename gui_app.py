@@ -14,7 +14,11 @@ if __name__ == "__main__":
         sys.executable, "-m", "streamlit", "run",
         "src/api_to_mcp/gui.py",
         "--server.port=8501",
-        "--server.headless=false"
+        "--server.headless=true"
     ])
+
+
+
+
 
 

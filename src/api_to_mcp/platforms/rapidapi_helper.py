@@ -230,3 +230,7 @@ def get_rapidapi_help(rapidapi_url: str):
     print(helper.generate_instructions(rapidapi_url))
 
 
+
+
+
+

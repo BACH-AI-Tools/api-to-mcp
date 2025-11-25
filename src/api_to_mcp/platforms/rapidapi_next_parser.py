@@ -419,10 +419,14 @@ class RapidAPINextParser:
         if 'schema' in param and param_in is None:
             return param
         
+        # 优先使用参数自己的 'in' 字段，而不是从数组位置推断
+        # 因为Selenium可能会将Query参数误放入header数组
+        actual_in = param.get('in', param_in or 'query')
+        
         # 否则转换格式
         openapi_param = {
             "name": param.get('name', ''),
-            "in": param_in or param.get('in', 'query'),
+            "in": actual_in,
             "required": param.get('required', False),
             "description": param.get('description', ''),
             "schema": param.get('schema', {
@@ -479,17 +483,32 @@ def parse_rapidapi_html(
             from .rapidapi_selenium_scraper import scrape_with_selenium
             
             print("   🌐 使用 Selenium 浏览器自动化...")
-            parsed_data['endpoints'] = scrape_with_selenium(
+            enriched_endpoints = scrape_with_selenium(
                 base_url,
                 parsed_data['endpoints'],
                 headless=True
             )
             
-        except ImportError:
+            # 检查是否成功获取参数
+            params_count = sum(1 for ep in enriched_endpoints if ep.get('parameters'))
+            if params_count > 0:
+                print(f"   ✅ 成功获取 {params_count}/{len(enriched_endpoints)} 个端点的参数")
+                parsed_data['endpoints'] = enriched_endpoints
+            else:
+                print(f"   ⚠️  Selenium 未能提取到参数，使用基础端点信息")
+            
+        except ImportError as e:
             print("   ⚠️  Selenium 未安装，使用基础方法")
             print("   💡 安装 Selenium 以获取完整参数: pip install selenium")
             print("   📝 当前会生成基础结构，请使用工具补充参数：")
             print("      python add_rapidapi_params.py rapidapi_<name>_auto.json")
+        except Exception as e:
+            print(f"   ❌ Selenium 爬取失败: {type(e).__name__}: {str(e)}")
+            print(f"   💡 可能的原因：")
+            print(f"      1. WebDriver 未安装或版本不匹配")
+            print(f"      2. 浏览器未安装或版本太旧")
+            print(f"      3. 网络连接问题或 RapidAPI 限流")
+            print(f"   📝 将使用基础端点信息（无参数）继续生成")
     
     # 构建 OpenAPI
     openapi = parser.build_openapi_from_data(parsed_data, api_info)

@@ -238,3 +238,7 @@ def scrape_rapidapi(rapidapi_url: str, api_key: Optional[str] = None) -> Dict[st
     return scraper.scrape_api(rapidapi_url, api_key)
 
 
+
+
+
+

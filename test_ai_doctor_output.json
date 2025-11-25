@@ -1,0 +1,909 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ai Doctor Api Ai Medical Chatbot Healthcare Ai Assistant",
+    "description": "RapidAPI: bilgisamapi-api2/ai-doctor-api-ai-medical-chatbot-healthcare-ai-assistant",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://ai-doctor-api-ai-medical-chatbot-healthcare-ai-assistant.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/chat": {
+      "post": {
+        "summary": "Neurosurgery",
+        "description": "Neurosurgery",
+        "operationId": "neurosurgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-86a80922": {
+        "summary": "Psychiatry",
+        "description": "Psychiatry",
+        "operationId": "psychiatry",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-a051ecbc": {
+        "summary": "Dermatology",
+        "description": "Dermatology",
+        "operationId": "dermatology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-6659dcc8": {
+        "summary": "Emergency Medicine",
+        "description": "Emergency Medicine",
+        "operationId": "emergency_medicine",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-97d0b788": {
+        "summary": "ENT",
+        "description": "ENT",
+        "operationId": "ent",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-f98c5e4d": {
+        "summary": "Obstetrics",
+        "description": "Obstetrics",
+        "operationId": "obstetrics",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-e80e7c95": {
+        "summary": "Hematology",
+        "description": "Hematology",
+        "operationId": "hematology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-0f8f2f35": {
+        "summary": "Nephrology",
+        "description": "Nephrology",
+        "operationId": "nephrology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-37c769a9": {
+        "summary": "Ophthalmology",
+        "description": "Ophthalmology",
+        "operationId": "ophthalmology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-2f7dfe10": {
+        "summary": "Pediatrics",
+        "description": "Pediatrics",
+        "operationId": "pediatrics",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-787fa30b": {
+        "summary": "Gynecology",
+        "description": "Gynecology",
+        "operationId": "gynecology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-253496bb": {
+        "summary": "Allergy and Immunology",
+        "description": "Allergy and Immunology",
+        "operationId": "allergy_and_immunology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-177d8630": {
+        "summary": "Infectious Diseases",
+        "description": "Infectious Diseases",
+        "operationId": "infectious_diseases",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-a7d6bd3c": {
+        "summary": "Rheumatology",
+        "description": "Rheumatology",
+        "operationId": "rheumatology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-eb67fcac": {
+        "summary": "Oncology",
+        "description": "Oncology",
+        "operationId": "oncology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-f988fe85": {
+        "summary": "Cardiology",
+        "description": "Cardiology",
+        "operationId": "cardiology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-988854c1": {
+        "summary": "Thoracic Surgery",
+        "description": "Thoracic Surgery",
+        "operationId": "thoracic_surgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-e2c57610": {
+        "summary": "Cardiovascular Surgery",
+        "description": "Cardiovascular Surgery",
+        "operationId": "cardiovascular_surgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-a26cfedd": {
+        "summary": "Endocrinology",
+        "description": "Endocrinology",
+        "operationId": "endocrinology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-3f84f378": {
+        "summary": "Pulmonology",
+        "description": "Pulmonology",
+        "operationId": "pulmonology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-5111ad6f": {
+        "summary": "Gastroenterology",
+        "description": "Gastroenterology",
+        "operationId": "gastroenterology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-e81ad88e": {
+        "summary": "Neurology",
+        "description": "Neurology",
+        "operationId": "neurology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-3e4e4caa": {
+        "summary": "Urology",
+        "description": "Urology",
+        "operationId": "urology",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-e65f4afc": {
+        "summary": "Pediatric Surgery",
+        "description": "Pediatric Surgery",
+        "operationId": "pediatric_surgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-2907453a": {
+        "summary": "Plastic Surgery",
+        "description": "Plastic Surgery",
+        "operationId": "plastic_surgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-b1d661a3": {
+        "summary": "Internal Medicine",
+        "description": "Internal Medicine",
+        "operationId": "internal_medicine",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-d5398861": {
+        "summary": "General Surgery",
+        "description": "General Surgery",
+        "operationId": "general_surgery",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-f5133eaa": {
+        "summary": "General Medicine",
+        "description": "General Medicine",
+        "operationId": "general_medicine",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-9ab80741": {
+        "summary": "Orthopedics",
+        "description": "Orthopedics",
+        "operationId": "orthopedics",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-post-59253e9e": {
+        "summary": "Family Medicine",
+        "description": "Family Medicine",
+        "operationId": "family_medicine",
+        "parameters": [
+          {
+            "name": "noqueue",
+            "in": "query",
+            "required": false,
+            "description": "Example value: 1",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "RapidAPIKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      },
+      "RapidAPIHost": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Host"
+      }
+    }
+  },
+  "security": [
+    {
+      "RapidAPIKey": []
+    },
+    {
+      "RapidAPIHost": []
+    }
+  ]
+}

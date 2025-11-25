@@ -495,7 +495,7 @@ export AZURE_OPENAI_DEPLOYMENT="gpt-4o"
                         with st.spinner("正在自动提取和转换..."):
                             try:
                                 # 使用新的自动提取功能
-                                spec = auto_extract_rapidapi(rapidapi_url, verify_ssl=verify_ssl)
+                                spec = auto_extract_rapidapi(rapidapi_url, verify_ssl=verify_ssl, use_selenium=True, headless=True)
                                 
                                 if spec and spec.get('paths'):
                                     st.success("🎉 成功提取规范！")
@@ -760,7 +760,8 @@ export AZURE_OPENAI_DEPLOYMENT="gpt-4o"
                             spec = auto_extract_rapidapi(
                                 url,
                                 verify_ssl=verify_ssl,
-                                use_selenium=use_selenium_batch
+                                use_selenium=use_selenium_batch,
+                                headless=True  # 无头浏览器模式
                             )
                             
                             if spec:

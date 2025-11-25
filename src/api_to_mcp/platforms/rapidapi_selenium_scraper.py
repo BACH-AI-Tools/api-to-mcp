@@ -10,13 +10,24 @@ import re
 class RapidAPISeleniumScraper:
     """使用 Selenium 完整爬取 RapidAPI"""
     
-    def __init__(self, headless: bool = True):
+    def __init__(self, headless: bool = True, enable_screenshots: bool = True):
         """
         初始化 Selenium
         
         Args:
             headless: 是否无头模式（不显示浏览器窗口）
+            enable_screenshots: 是否启用自动截图（记录每一步操作）
         """
+        self.enable_screenshots = enable_screenshots
+        self.screenshot_counter = 0
+        
+        # 创建截图目录
+        if enable_screenshots:
+            import os
+            self.screenshot_dir = f"debug/screenshots_{int(time.time())}"
+            os.makedirs(self.screenshot_dir, exist_ok=True)
+            print(f"            📸 截图保存目录: {self.screenshot_dir}")
+        
         try:
             from selenium import webdriver
             from selenium.webdriver.common.by import By
@@ -46,9 +57,19 @@ class RapidAPISeleniumScraper:
                 from webdriver_manager.chrome import ChromeDriverManager
                 
                 print("            📦 使用 webdriver-manager 自动管理 ChromeDriver...")
+                print("            ⏳ 正在下载/检查 ChromeDriver（首次运行可能需要1-3分钟）...")
+                print("            💡 提示：下载完成后会自动缓存，下次启动会很快")
+                
+                # 设置超时和日志级别
+                import os
+                os.environ['WDM_LOG'] = '1'  # 启用详细日志
+                
                 service = Service(ChromeDriverManager().install())
+                print("            ✅ ChromeDriver 已准备好")
+                
+                print("            🚀 正在启动 Chrome 浏览器...")
                 self.driver = webdriver.Chrome(service=service, options=options)
-                print("            ✅ ChromeDriver 初始化成功")
+                print("            ✅ Chrome 浏览器启动成功！")
             except ImportError:
                 # 如果没有 webdriver-manager，使用系统 PATH 中的 chromedriver
                 print("            ⚠️  未安装 webdriver-manager，尝试使用系统 ChromeDriver...")
@@ -95,7 +116,19 @@ class RapidAPISeleniumScraper:
         
         try:
             self.driver.get(endpoint_url)
-            time.sleep(3)  # 等待 JavaScript 加载
+            
+            # 等待页面主要内容加载完成
+            try:
+                # 等待标签页容器出现
+                self.wait.until(self.EC.presence_of_element_located((self.By.XPATH, "//div[@role='tablist']")))
+                time.sleep(2)  # 额外等待 JS 渲染
+                print(f"            ✅ 页面加载完成")
+            except:
+                print(f"            ⚠️  页面加载超时，继续尝试...")
+                time.sleep(3)
+            
+            # 截图：初始页面
+            self._take_screenshot("01_page_loaded")
             
             result = {}
             
@@ -121,6 +154,43 @@ class RapidAPISeleniumScraper:
             print(f"         ✗ Selenium 爬取失败: {e}")
             return {}
     
+    def _take_screenshot(self, step_name: str):
+        """截图记录当前步骤"""
+        if not self.enable_screenshots:
+            return
+        
+        try:
+            self.screenshot_counter += 1
+            filename = f"{self.screenshot_counter:02d}_{step_name}.png"
+            filepath = f"{self.screenshot_dir}/{filename}"
+            self.driver.save_screenshot(filepath)
+            print(f"            📸 截图: {filename}")
+        except Exception as e:
+            print(f"            ⚠️  截图失败: {e}")
+    
+    def _close_cookie_dialog(self):
+        """关闭 Cookie 对话框（如果存在）"""
+        try:
+            # 查找常见的 Cookie 对话框按钮
+            button_texts = ['Accept All', 'Reject All', 'Accept', 'Close', '×', 'Got it']
+            
+            for text in button_texts:
+                try:
+                    buttons = self.driver.find_elements(self.By.XPATH, 
+                        f"//button[contains(., '{text}')]")
+                    for btn in buttons:
+                        if btn.is_displayed():
+                            btn.click()
+                            print(f"            ✅ 已关闭 Cookie 对话框（点击了 '{text}'）")
+                            time.sleep(1)
+                            return
+                except:
+                    continue
+            
+            print(f"            ℹ️  未找到 Cookie 对话框")
+        except Exception as e:
+            print(f"            ⚠️  关闭 Cookie 对话框失败: {e}")
+    
     def _click_and_extract_params(self) -> Dict[str, Any]:
         """点击各个标签页并提取所有类型的参数"""
         all_params = {
@@ -138,26 +208,64 @@ class RapidAPISeleniumScraper:
                 all_params['app'] = app_config
                 print(f"            ✅ 提取到 App 配置")
             
-            # 2. 提取 Query Params
+            # 2. 首先关闭 Cookie 对话框（如果存在）
+            self._close_cookie_dialog()
+            
+            # 3. 提取 Query Params（点击 Params 标签，然后提取）
             print("            🔍 提取 Query Params...")
-            query_params = self._extract_tab_params("Params")
+            # 截图：点击Params前
+            self._take_screenshot("02_before_click_params")
+            
+            # 先尝试点击 Params 标签（可能在主体区域顶部）
+            self._click_params_tab()
+            time.sleep(3)  # 增加等待时间，等待参数区域加载
+            
+            # 截图：点击Params后
+            self._take_screenshot("03_after_click_params")
+            
+            # 使用统一的 DOM 结构提取方法（与 Headers 相同）
+            query_params = self._extract_parameters()
             if query_params:
                 all_params['query'] = query_params
                 print(f"            ✅ 提取到 {len(query_params)} 个查询参数")
             
             # 3. 提取 Headers
             print("            🔍 提取 Headers...")
+            self._take_screenshot("04_before_headers")
             headers = self._extract_tab_params("Headers")
+            
+            # 去重：如果 Headers 中的参数已经在 Query 中，则过滤掉
             if headers:
-                all_params['header'] = headers
-                print(f"            ✅ 提取到 {len(headers)} 个 Header 参数")
+                query_param_names = {p['name'] for p in all_params['query']}
+                headers_only = [h for h in headers if h['name'] not in query_param_names]
+                
+                # 同时过滤掉明显是 Query 参数但误识别为 Header 的
+                # 真正的 Headers 通常是：X-RapidAPI-Host, Authorization, Content-Type 等
+                real_headers = []
+                for h in headers_only:
+                    # 如果参数的 'in' 字段是 'query'，说明它本来就是 Query 参数
+                    if h.get('in') == 'query':
+                        # 移动到 query 数组
+                        all_params['query'].append(h)
+                        print(f"            📌 {h['name']} 从 Headers 移动到 Query Params")
+                    else:
+                        real_headers.append(h)
+                
+                if real_headers:
+                    all_params['header'] = real_headers
+                    print(f"            ✅ 提取到 {len(real_headers)} 个真正的 Header 参数")
+                else:
+                    print(f"            ℹ️  Headers 标签无额外参数（已去重）")
+            self._take_screenshot("05_after_headers")
             
             # 4. 提取 Body
             print("            🔍 提取 Body 参数...")
+            self._take_screenshot("06_before_body")
             body_data = self._extract_body_params()
             if body_data:
                 all_params['body'] = body_data
                 print(f"            ✅ 提取到 Body 参数")
+            self._take_screenshot("07_after_body")
             
             return all_params
         
@@ -213,28 +321,305 @@ class RapidAPISeleniumScraper:
         except Exception as e:
             return {}
     
+    def _debug_print_tabs(self):
+        """调试：打印页面上所有的标签"""
+        try:
+            print("            🐛 调试：页面上的所有 tab 元素：")
+            all_tabs = self.driver.find_elements(self.By.XPATH, "//*[@role='tab']")
+            if all_tabs:
+                for i, tab in enumerate(all_tabs):
+                    try:
+                        text = tab.text.strip()
+                        visible = tab.is_displayed()
+                        print(f"               Tab {i+1}: '{text}' (visible={visible})")
+                    except:
+                        pass
+            else:
+                print("               未找到任何 role='tab' 的元素")
+            
+            # 也检查一下是否有 button
+            print("            🐛 调试：页面上的按钮文本：")
+            buttons = self.driver.find_elements(self.By.TAG_NAME, "button")[:20]  # 只看前20个
+            for i, btn in enumerate(buttons):
+                try:
+                    text = btn.text.strip()
+                    if text:
+                        print(f"               Button {i+1}: '{text}'")
+                except:
+                    pass
+        except Exception as e:
+            print(f"            🐛 调试失败: {e}")
+    
+    def _click_params_tab(self):
+        """点击主体区域的 Params 标签"""
+        try:
+            print("            📍 点击 Params 标签...")
+            
+            # 多种定位策略查找 Params 标签
+            selectors = [
+                # 可能是按钮
+                "//button[contains(text(), 'Params')]",
+                "//button[contains(., 'Params')]",
+                # 可能是 div
+                "//div[contains(text(), 'Params') and contains(@class, 'tab')]",
+                "//*[contains(text(), 'Params') and (self::button or self::div or self::a)]",
+                # 可能有数字标记，如 "Params(4)"
+                "//*[contains(text(), 'Params(')]",
+            ]
+            
+            clicked = False
+            for selector in selectors:
+                try:
+                    elements = self.driver.find_elements(self.By.XPATH, selector)
+                    for elem in elements:
+                        if elem.is_displayed():
+                            # 滚动到元素位置
+                            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+                            time.sleep(0.5)
+                            # 尝试点击
+                            try:
+                                elem.click()
+                            except:
+                                # 如果直接点击失败，使用 JS 点击
+                                self.driver.execute_script("arguments[0].click();", elem)
+                            
+                            clicked = True
+                            print("            ✅ 成功点击 Params 标签")
+                            break
+                    if clicked:
+                        break
+                except:
+                    continue
+            
+            if not clicked:
+                print("            ⚠️  未找到 Params 标签（可能默认已展开）")
+                
+        except Exception as e:
+            print(f"            ⚠️  点击 Params 标签失败: {e}")
+    
+    def _extract_query_params_from_page(self) -> List[Dict[str, Any]]:
+        """从页面主体的 Query Params 区域提取参数"""
+        try:
+            print("            📍 提取参数内容...")
+            time.sleep(1)  # 等待内容加载
+            
+            # 尝试多种方式定位参数区域
+            params = []
+            
+            # 方法1: 查找参数列表（最常见的结构）
+            try:
+                # 查找所有可能包含参数的元素
+                # 通常参数名会有特殊样式（蓝色标记等）
+                param_names = self.driver.find_elements(self.By.XPATH,
+                    "//div[contains(@class, 'param') or contains(@class, 'field')]//span[contains(@class, 'name') or contains(@class, 'key')]")
+                
+                if not param_names:
+                    # 尝试查找所有带蓝色或高亮样式的参数名
+                    param_names = self.driver.find_elements(self.By.XPATH,
+                        "//*[contains(@class, 'parameter-name') or contains(@class, 'field-name')]")
+                
+                print(f"            📊 找到 {len(param_names)} 个候选参数元素")
+                
+                for param_elem in param_names:
+                    try:
+                        # 获取参数名
+                        param_name = param_elem.text.strip()
+                        if not param_name or len(param_name) > 50:  # 跳过空或过长的文本
+                            continue
+                        
+                        # 查找该参数的父容器，获取完整信息
+                        parent = param_elem.find_element(self.By.XPATH, "./ancestor::div[contains(@class, 'param') or contains(@class, 'field')][1]")
+                        param_info = self._parse_param_from_container(param_name, parent)
+                        
+                        if param_info:
+                            params.append(param_info)
+                            print(f"               ✓ {param_name} ({param_info['schema']['type']})")
+                    except:
+                        continue
+                        
+            except Exception as e:
+                print(f"            ⚠️  方法1失败: {e}")
+            
+            # 方法2: 从页面文本中解析参数（备用方案）
+            if not params:
+                print("            ⚠️  未能通过DOM提取参数，尝试文本解析...")
+                try:
+                    page_text = self.driver.find_element(self.By.TAG_NAME, "body").text
+                    params = self._parse_params_from_text(page_text)
+                    if params:
+                        print(f"            ✅ 通过文本解析提取到 {len(params)} 个参数")
+                except:
+                    pass
+            
+            # 如果还是没有参数，保存HTML用于调试
+            if not params:
+                import os
+                os.makedirs('debug', exist_ok=True)
+                debug_file = f"debug/debug_no_params_{int(time.time())}.html"
+                with open(debug_file, 'w', encoding='utf-8') as f:
+                    f.write(self.driver.page_source)
+                print(f"            💾 未提取到参数，页面已保存到: {debug_file}")
+            
+            return params
+            
+        except Exception as e:
+            print(f"            ❌ 提取 Query Params 失败: {e}")
+            return []
+    
+    def _parse_param_from_container(self, param_name: str, container) -> Optional[Dict[str, Any]]:
+        """从参数容器元素中提取完整参数信息"""
+        try:
+            import re
+            
+            # 获取容器的完整文本
+            text = container.text
+            if not text:
+                return None
+            
+            # 提取类型（String, Number, Boolean等）
+            param_type = 'string'  # 默认
+            type_keywords = ['String', 'Number', 'Integer', 'Boolean', 'Array', 'Object']
+            for keyword in type_keywords:
+                if keyword in text:
+                    param_type = keyword
+                    break
+            
+            # 判断是否必需（查找 "optional" 关键词）
+            required = 'optional' not in text.lower() and '(optional)' not in text.lower()
+            
+            # 提取描述
+            description = ''
+            lines = text.split('\n')
+            # 跳过第一行（通常是参数名和类型），后面的是描述
+            if len(lines) > 1:
+                desc_lines = []
+                for line in lines[1:]:
+                    line = line.strip()
+                    # 跳过只包含类型关键字的行
+                    if line and line not in type_keywords and not line.startswith('Default'):
+                        desc_lines.append(line)
+                description = ' '.join(desc_lines)
+            
+            # 提取默认值
+            default_value = None
+            default_match = re.search(r'[Dd]efault[:\s]+([^\s\n]+)', text)
+            if default_match:
+                default_str = default_match.group(1)
+                # 尝试转换类型
+                if param_type.lower() in ['number', 'integer']:
+                    try:
+                        default_value = int(default_str) if '.' not in default_str else float(default_str)
+                    except:
+                        default_value = default_str
+                else:
+                    default_value = default_str
+            
+            result = {
+                'name': param_name,
+                'in': 'query',
+                'required': required,
+                'description': description[:500] if description else '',  # 限制长度
+                'schema': {
+                    'type': self._convert_rapidapi_type(param_type)
+                }
+            }
+            
+            if default_value is not None:
+                result['schema']['default'] = default_value
+            
+            return result
+            
+        except Exception as e:
+            print(f"               ⚠️  解析参数 {param_name} 失败: {e}")
+            return None
+    
+    def _parse_params_from_text(self, text: str) -> List[Dict[str, Any]]:
+        """从页面文本中解析参数（备用方案）"""
+        params = []
+        import re
+        
+        # 查找参数模式：paramName String optional
+        pattern = r'([a-zA-Z_][a-zA-Z0-9_]*)\s+(?:\()?([Ss]tring|[Nn]umber|[Bb]oolean|[Ii]nteger)(?:\))?\s*(optional|required)?'
+        matches = re.findall(pattern, text)
+        
+        for match in matches:
+            param_name, param_type, optional_flag = match
+            
+            # 过滤常见的非参数词
+            if param_name.lower() in ['type', 'string', 'number', 'boolean', 'default', 'value']:
+                continue
+            
+            params.append({
+                'name': param_name,
+                'in': 'query',
+                'required': optional_flag.lower() != 'optional' if optional_flag else True,
+                'description': '',
+                'schema': {
+                    'type': self._convert_rapidapi_type(param_type)
+                }
+            })
+        
+        return params
+    
+    def _convert_rapidapi_type(self, rapidapi_type: str) -> str:
+        """转换 RapidAPI 类型到 OpenAPI 类型"""
+        type_map = {
+            'string': 'string',
+            'number': 'number',
+            'integer': 'integer',
+            'boolean': 'boolean',
+            'array': 'array',
+            'object': 'object'
+        }
+        return type_map.get(rapidapi_type.lower(), 'string')
+    
     def _extract_tab_params(self, tab_name: str) -> List[Dict[str, Any]]:
         """通用的标签页参数提取方法"""
         try:
             # 点击指定标签页
             print(f"            📍 点击 {tab_name} 标签...")
-            tab_xpath = f"//*[contains(text(), '{tab_name}') and @role='tab']"
-            tabs = self.driver.find_elements(self.By.XPATH, tab_xpath)
+            
+            # 尝试多种定位策略
+            tab_xpaths = [
+                f"//*[contains(text(), '{tab_name}') and @role='tab']",
+                f"//button[contains(text(), '{tab_name}') and @role='tab']",
+                f"//div[@role='tab' and contains(., '{tab_name}')]",
+                f"//*[@role='tab']//*[contains(text(), '{tab_name}')]/ancestor::*[@role='tab']"
+            ]
+            
+            tabs = []
+            for xpath in tab_xpaths:
+                tabs = self.driver.find_elements(self.By.XPATH, xpath)
+                if tabs:
+                    break
+            
+            if not tabs:
+                # 调试：保存页面 HTML
+                import os
+                os.makedirs('debug', exist_ok=True)
+                debug_file = f"debug/debug_tab_{tab_name}_{int(time.time())}.html"
+                with open(debug_file, 'w', encoding='utf-8') as f:
+                    f.write(self.driver.page_source)
+                print(f"            ⚠️  未找到 {tab_name} 标签")
+                print(f"            💾 页面已保存到: {debug_file}")
+                return []
             
             tab_clicked = False
             for tab in tabs:
-                if tab.is_displayed():
-                    try:
+                try:
+                    if tab.is_displayed():
+                        self.driver.execute_script("arguments[0].scrollIntoView(true);", tab)
+                        time.sleep(0.5)
                         self.driver.execute_script("arguments[0].click();", tab)
-                        time.sleep(2)
+                        time.sleep(3)  # 增加等待时间，确保标签页内容完全加载
                         tab_clicked = True
                         print(f"            ✅ 点击了 {tab_name} 标签")
                         break
-                    except:
-                        continue
+                except Exception as e:
+                    continue
             
             if not tab_clicked:
-                print(f"            ⚠️  未找到 {tab_name} 标签")
+                print(f"            ⚠️  找到 {tab_name} 标签但无法点击")
                 return []
             
             # 检查是否显示 "No additional params" 或 "No additional headers"
@@ -259,8 +644,20 @@ class RapidAPISeleniumScraper:
         try:
             # 点击 Body 标签
             print("            📍 点击 Body 标签...")
-            body_tabs = self.driver.find_elements(self.By.XPATH, 
-                "//*[text()='Body' and @role='tab']")
+            
+            # 尝试多种定位策略
+            body_xpaths = [
+                "//*[text()='Body' and @role='tab']",
+                "//button[contains(text(), 'Body') and @role='tab']",
+                "//div[@role='tab' and contains(., 'Body')]",
+                "//*[@role='tab']//*[contains(text(), 'Body')]/ancestor::*[@role='tab']"
+            ]
+            
+            body_tabs = []
+            for xpath in body_xpaths:
+                body_tabs = self.driver.find_elements(self.By.XPATH, xpath)
+                if body_tabs:
+                    break
             
             tab_clicked = False
             for tab in body_tabs:
@@ -526,9 +923,9 @@ class RapidAPISeleniumScraper:
         parameters = []
         
         try:
-            # 等待页面加载完成
+            # 等待页面加载完成（增加等待时间，确保标签页内容完全渲染）
             print("            ⏳ 等待页面加载...")
-            time.sleep(3)  # 增加等待时间
+            time.sleep(6)  # 增加到6秒，确保所有动态内容都渲染完成
             
             # 方法1: 从 DOM 结构精确提取（最可靠，基于实际 HTML 结构）
             print("            🔍 方法1: 从 DOM 结构精确提取...")
@@ -901,7 +1298,24 @@ class RapidAPISeleniumScraper:
             param_labels = self.driver.find_elements(self.By.XPATH, 
                 "//div[@data-state='active']//label[@aria-label and not(contains(@aria-label, 'Request URL'))]")
             
-            print(f"            📦 找到 {len(param_labels)} 个参数标签")
+            print(f"            📦 找到 {len(param_labels)} 个参数标签（方法1：激活标签页）")
+            
+            # 额外检查：尝试从所有可见的输入框获取参数（防止遗漏）
+            # 查找所有 label + input 组合
+            all_input_labels = self.driver.find_elements(self.By.XPATH, 
+                "//label[@aria-label]//ancestor::div[1]//input/..//label[@aria-label]")
+            if len(all_input_labels) > len(param_labels):
+                print(f"            📦 找到额外 {len(all_input_labels) - len(param_labels)} 个可能的参数标签（方法2：所有输入框）")
+                # 合并但去重
+                existing_labels = set([l.get_attribute('aria-label') for l in param_labels if l.get_attribute('aria-label')])
+                for label in all_input_labels:
+                    label_text = label.get_attribute('aria-label')
+                    if label_text and label_text not in existing_labels:
+                        param_labels.append(label)
+                        existing_labels.add(label_text)
+                        print(f"            ➕ 添加遗漏的参数: {label_text}")
+            
+            print(f"            📦 总共 {len(param_labels)} 个参数标签待处理")
             
             # 如果找不到参数，保存页面用于调试
             if len(param_labels) == 0:
@@ -915,11 +1329,20 @@ class RapidAPISeleniumScraper:
                 except:
                     pass
                 
-                # 尝试更宽松的选择器
+                # 尝试更宽松的选择器（但仍限制在激活的标签页内）
                 print("            🔍 尝试更宽松的选择器...")
+                # 关键修复：确保只查找当前激活标签页内的元素
                 param_labels = self.driver.find_elements(self.By.XPATH, 
-                    "//label[@aria-label]")
-                print(f"            📦 找到 {len(param_labels)} 个 label 元素")
+                    "//div[@data-state='active']//label[@aria-label]")
+                print(f"            📦 找到 {len(param_labels)} 个 label 元素（仅激活标签页）")
+                
+                # 如果还是找不到，尝试所有label（包括不可见的，因为RapidAPI用invisible容器）
+                if len(param_labels) == 0:
+                    print("            🔍 尝试查找所有label（包括不可见容器中的）...")
+                    # RapidAPI特殊处理：参数可能在invisible的容器中
+                    all_labels = self.driver.find_elements(self.By.XPATH, "//label[@aria-label]")
+                    print(f"            📦 找到 {len(all_labels)} 个 label 元素（包含不可见的）")
+                    param_labels = all_labels
             
             for label_elem in param_labels:
                 try:
@@ -934,6 +1357,7 @@ class RapidAPISeleniumScraper:
                         'target', 'client', 'search endpoints', 'search',
                         'get', 'post', 'put', 'delete', 'feat', 'custom',
                         'g-recaptcha', 'recaptcha',
+                        'rapid_do_not_include_in_request_key',  # RapidAPI 内部参数
                         'content-type', 'content type', 'accept', 'user-agent',  # HTTP 标准 headers
                         'authorization', 'cookie', 'referer', 'origin', 'host'   # 更多标准 headers
                     ]
@@ -942,18 +1366,18 @@ class RapidAPISeleniumScraper:
                         continue
                     
                     # 过滤太短或太长的参数名
-                    if len(param_name) < 2 or len(param_name) > 50:
+                    # 但是保留常见的单字符参数（如 q, x, y, z 等）
+                    common_single_char_params = ['q', 'x', 'y', 'z', 'n', 'k', 'v', 't', 's', 'p', 'i', 'id']
+                    if len(param_name) < 1 or len(param_name) > 50:
                         print(f"            ⊗ 过滤长度: {param_name}")
                         continue
+                    if len(param_name) == 1 and param_name.lower() not in common_single_char_params:
+                        print(f"            ⊗ 过滤单字符（非白名单）: {param_name}")
+                        continue
                     
-                    # 检查元素是否真的可见（排除 invisible 的元素）
-                    try:
-                        parent_classes = label_elem.find_element(self.By.XPATH, './ancestor::div[1]').get_attribute('class') or ''
-                        if 'invisible' in parent_classes or '!invisible' in parent_classes:
-                            print(f"            ⊗ 过滤不可见元素: {param_name}")
-                            continue
-                    except:
-                        pass
+                    # RapidAPI特殊处理：不检查可见性，因为参数可能在invisible容器中
+                    # （RapidAPI使用invisible容器存储参数数据）
+                    # 跳过可见性检查
                     
                     print(f"            🔍 解析参数: {param_name}")
                     
@@ -1011,12 +1435,17 @@ class RapidAPISeleniumScraper:
                         pass
                     
                     # 6. 获取描述（markdown 区域）
+                    # 使用 textContent 而不是 text，因为元素可能在invisible容器中
                     description = ''
                     try:
                         desc_divs = parent.find_elements(self.By.XPATH, 
                             './/div[contains(@class, "markdown")]')
                         if desc_divs:
-                            description = desc_divs[0].text.strip()
+                            # 优先使用textContent（不受可见性影响）
+                            description = desc_divs[0].get_attribute('textContent') or desc_divs[0].text
+                            description = description.strip()
+                            # 清理换行和多余空格
+                            description = ' '.join(description.split())
                             # 限制描述长度
                             description = description[:500]
                     except:
@@ -1026,10 +1455,12 @@ class RapidAPISeleniumScraper:
                     default_value = None
                     try:
                         default_divs = parent.find_elements(self.By.XPATH, 
-                            './/div[contains(@class, "text-gray-500") and contains(text(), "Default:")]')
-                        if default_divs:
-                            default_text = default_divs[0].text
-                            default_value = default_text.replace('Default:', '').strip()
+                            './/div[contains(@class, "text-gray-500")]')
+                        for div in default_divs:
+                            text = div.get_attribute('textContent') or div.text
+                            if 'Default:' in text:
+                                default_value = text.replace('Default:', '').strip()
+                                break
                     except:
                         pass
                     
@@ -1058,6 +1489,44 @@ class RapidAPISeleniumScraper:
                 except Exception as e:
                     print(f"            ⚠️  解析参数 {param_name} 失败: {e}")
                     continue
+            
+            # 最后检查：针对特定端点类型的智能补全
+            # 如果是 auto-complete 或 search 端点但没有 q 参数，发出警告
+            current_url = self.driver.current_url.lower()
+            param_names = [p['name'] for p in parameters]
+            
+            if ('auto-complete' in current_url or 'search' in current_url) and 'q' not in param_names and 'query' not in param_names:
+                print(f"            ⚠️  警告: {current_url}")
+                print(f"               这是一个搜索/自动补全端点，但未找到 'q' 或 'query' 参数")
+                print(f"               当前找到的参数: {param_names}")
+                print(f"               这可能导致 API 调用失败！")
+                
+                # 尝试最后一次查找：搜索页面上任何名为 'q' 或 'query' 的输入框
+                try:
+                    q_inputs = self.driver.find_elements(self.By.XPATH, 
+                        "//input[@name='q' or @name='query' or @placeholder='query' or @placeholder='search']")
+                    if q_inputs:
+                        print(f"            🔍 发现隐藏的查询输入框！尝试提取...")
+                        for q_input in q_inputs:
+                            try:
+                                # 尝试找到对应的 label
+                                label_elem = q_input.find_element(self.By.XPATH, 
+                                    "./preceding-sibling::label[1] | ./ancestor::div[contains(@class, 'flex-col')][1]//label[1]")
+                                param_name = label_elem.get_attribute('aria-label') or q_input.get_attribute('name') or 'q'
+                                
+                                if param_name not in param_names:
+                                    print(f"            ✅ 找到遗漏的参数: {param_name}")
+                                    parameters.append({
+                                        'name': param_name,
+                                        'in': 'query',
+                                        'required': True,
+                                        'description': 'Query for suggestions' if 'auto-complete' in current_url else 'Search query',
+                                        'schema': {'type': 'string'}
+                                    })
+                            except:
+                                continue
+                except:
+                    pass
             
             return parameters
             
@@ -1547,7 +2016,8 @@ class RapidAPISeleniumScraper:
 def scrape_with_selenium(
     base_url: str,
     endpoints: List[Dict[str, Any]],
-    headless: bool = True
+    headless: bool = True,
+    enable_screenshots: bool = True
 ) -> List[Dict[str, Any]]:
     """
     使用 Selenium 爬取所有端点的完整信息
@@ -1556,12 +2026,13 @@ def scrape_with_selenium(
         base_url: API 基础 URL
         endpoints: 端点列表
         headless: 是否无头模式
+        enable_screenshots: 是否启用自动截图（记录操作过程）
     
     Returns:
         更新后的端点列表（包含完整参数和响应）
     """
     try:
-        with RapidAPISeleniumScraper(headless) as scraper:
+        with RapidAPISeleniumScraper(headless, enable_screenshots) as scraper:
             enriched = []
             
             for i, endpoint in enumerate(endpoints):

@@ -218,3 +218,7 @@ python create_rapidapi_mcp.py
 **现在建议：直接使用 `rapidapi_template_jsearch.json` 模板，最快最可靠！** 🎉
 
 
+
+
+
+
