@@ -252,6 +252,11 @@ Visit **[EMCP Platform]({self.emcp_domain})** now to start your MCP journey!
         server_dir = self.output_dir / mcp_server.name
         server_dir.mkdir(parents=True, exist_ok=True)
         
+        # 生成 openapi.json 文件
+        openapi_file = server_dir / "openapi.json"
+        openapi_spec = self._api_spec_to_openapi(mcp_server.api_spec)
+        openapi_file.write_text(json.dumps(openapi_spec, ensure_ascii=False, indent=2), encoding='utf-8')
+        
         # 生成主服务器文件
         server_file = server_dir / "server.py"
         server_code = self._render_server_template(mcp_server, transport)
@@ -261,6 +266,11 @@ Visit **[EMCP Platform]({self.emcp_domain})** now to start your MCP journey!
         pyproject_file = server_dir / "pyproject.toml"
         pyproject_code = self._render_pyproject_template(mcp_server)
         pyproject_file.write_text(pyproject_code, encoding='utf-8')
+        
+        # 生成 LICENSE 文件
+        license_file = server_dir / "LICENSE"
+        license_code = self._generate_license()
+        license_file.write_text(license_code, encoding='utf-8')
         
         # 生成 README（中文）
         readme_file = server_dir / "README.md"
@@ -281,26 +291,81 @@ Visit **[EMCP Platform]({self.emcp_domain})** now to start your MCP journey!
         init_file = server_dir / "__init__.py"
         init_file.write_text(f'"""MCP Server for {mcp_server.api_spec.title}"""\n', encoding='utf-8')
         
+        # 生成 setup.py（兼容性）
+        setup_file = server_dir / "setup.py"
+        setup_code = self._generate_setup_py(mcp_server)
+        setup_file.write_text(setup_code, encoding='utf-8')
+        
         return server_dir
+    
+    def _generate_license(self) -> str:
+        """生成 MIT 许可证"""
+        from datetime import datetime
+        year = datetime.now().year
+        return f'''MIT License
+
+Copyright (c) {year} bachstudio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+'''
+    
+    def _generate_setup_py(self, mcp_server: MCPServer) -> str:
+        """生成 setup.py 文件（兼容性）"""
+        return f'''#!/usr/bin/env python3
+from setuptools import setup, find_packages
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+setup(
+    name="{mcp_server.package_name}",
+    version="{mcp_server.version}",
+    description="MCP server for accessing {mcp_server.api_spec.title} API",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="bachstudio",
+    python_requires=">=3.10",
+    install_requires=[
+        "fastmcp>=2.0.0",
+        "httpx>=0.25.0",
+    ],
+    py_modules=["server"],
+    entry_points={{
+        "console_scripts": [
+            "{mcp_server.package_name.replace('-', '_')}=server:main",
+        ],
+    }},
+    package_data={{
+        "": ["openapi.json"],
+    }},
+    include_package_data=True,
+)
+'''
     
     def _render_server_template(self, mcp_server: MCPServer, transport: str) -> str:
         """渲染服务器模板"""
-        import json
-        
-        # 将 API 规范转换回 OpenAPI 格式
-        openapi_spec = self._api_spec_to_openapi(mcp_server.api_spec)
-        openapi_spec_json = json.dumps(openapi_spec, ensure_ascii=False, indent=2)
-        
-        # 转义 JSON 字符串中的引号和换行符，以便嵌入到 Python 字符串中
-        openapi_spec_json = openapi_spec_json.replace('\\', '\\\\').replace('"', '\\"').replace('\n', '\\n')
-        
         template = self.templates['server.py']
         return template.render(
             server=mcp_server,
             api_spec=mcp_server.api_spec,
             tools=mcp_server.tools,
-            transport=transport,
-            openapi_spec_json=openapi_spec_json
+            transport=transport
         )
     
     def _render_pyproject_template(self, mcp_server: MCPServer) -> str:
@@ -413,7 +478,7 @@ Visit **[EMCP Platform]({self.emcp_domain})** now to start your MCP journey!
 SERVER_TEMPLATE = '''"""
 {{ api_spec.title }} MCP Server
 
-使用 FastMCP 的 from_openapi 方法自动生成
+MCP server for accessing {{ api_spec.title }} API.
 
 Version: {{ server.version }}
 Transport: {{ transport }}
@@ -421,6 +486,7 @@ Transport: {{ transport }}
 import os
 import json
 import httpx
+from pathlib import Path
 from fastmcp import FastMCP
 
 # 服务器版本和配置
@@ -437,8 +503,13 @@ PORT = int(os.getenv("PORT", "8000"))  # SSE/HTTP 服务器端口
 HOST = os.getenv("HOST", "localhost")  # SSE/HTTP 服务器主机
 {% endif %}
 
-# OpenAPI 规范
-OPENAPI_SPEC = """{{ openapi_spec_json }}"""
+
+def load_openapi_spec():
+    """从 openapi.json 文件加载 OpenAPI 规范"""
+    openapi_path = Path(__file__).parent / "openapi.json"
+    with open(openapi_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 
 # 创建 HTTP 客户端
 # 设置默认 headers
@@ -475,7 +546,7 @@ client = httpx.AsyncClient(
 {% endif %}
 
 # 从 OpenAPI 规范创建 FastMCP 服务器
-openapi_dict = json.loads(OPENAPI_SPEC)
+openapi_dict = load_openapi_spec()
 mcp = FastMCP.from_openapi(
     openapi_spec=openapi_dict,
     client=client,
@@ -539,9 +610,23 @@ if __name__ == "__main__":
 PYPROJECT_TEMPLATE = '''[project]
 name = "{{ server.package_name }}"
 version = "{{ server.version }}"
-description = "{{ server.description }}"
+description = "MCP server for accessing {{ api_spec.title }} API"
 readme = "README.md"
 requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+    {name = "bachstudio"}
+]
+keywords = ["mcp", "{{ server.name }}", "api", "model-context-protocol"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
     "fastmcp>=2.0.0",
     "httpx>=0.25.0",
@@ -560,6 +645,7 @@ dev = [
 Homepage = "https://github.com/bachstudio/{{ server.package_name }}"
 Repository = "https://github.com/bachstudio/{{ server.package_name }}"
 Documentation = "https://github.com/bachstudio/{{ server.package_name }}#readme"
+"Bug Tracker" = "https://github.com/bachstudio/{{ server.package_name }}/issues"
 
 [build-system]
 requires = ["hatchling"]
@@ -567,6 +653,16 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]
+artifacts = ["openapi.json"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "server.py",
+    "openapi.json",
+    "README.md",
+    "LICENSE",
+    "__init__.py",
+]
 
 [tool.hatch.version]
 path = "server.py"
@@ -577,13 +673,15 @@ README_TEMPLATE = '''# {{ api_spec.title }} MCP Server
 
 {% if lang == 'zh' %}[English](./README_EN.md) | 简体中文 | [繁體中文](./README_ZH-TW.md){% elif lang == 'en' %}English | [简体中文](./README.md) | [繁體中文](./README_ZH-TW.md){% elif lang == 'zh_tw' %}[English](./README_EN.md) | [简体中文](./README.md) | 繁體中文{% endif %}
 
+{% if lang == 'zh' %}用于访问 {{ api_spec.title }} API 的 MCP 服务器。{% elif lang == 'en' %}An MCP server for accessing {{ api_spec.title }} API.{% elif lang == 'zh_tw' %}用於存取 {{ api_spec.title }} API 的 MCP 伺服器。{% endif %}
+
 {{ emcp_promotion }}
 
 ---
 
 {% if lang == 'zh' %}## 简介{% elif lang == 'en' %}## Introduction{% elif lang == 'zh_tw' %}## 簡介{% endif %}
 
-{% if lang == 'zh' %}这是一个使用 [FastMCP](https://fastmcp.wiki) 自动生成的 MCP 服务器，用于访问 {{ api_spec.title }} API。{% elif lang == 'en' %}This is an automatically generated MCP server using [FastMCP](https://fastmcp.wiki) for accessing the {{ api_spec.title }} API.{% elif lang == 'zh_tw' %}這是一個使用 [FastMCP](https://fastmcp.wiki) 自動生成的 MCP 伺服器，用於存取 {{ api_spec.title }} API。{% endif %}
+{% if lang == 'zh' %}这是一个 MCP 服务器，用于访问 {{ api_spec.title }} API。{% elif lang == 'en' %}This is an MCP server for accessing the {{ api_spec.title }} API.{% elif lang == 'zh_tw' %}這是一個 MCP 伺服器，用於存取 {{ api_spec.title }} API。{% endif %}
 
 {% if lang == 'zh' %}- **PyPI 包名**: `{{ server.package_name }}`
 - **版本**: {{ server.version }}
@@ -694,17 +792,17 @@ export API_KEY="your_api_key_here"
 
 {% endif %}
 
-### 在 Claude Desktop 中使用
+{% if lang == 'zh' %}### 在 Cursor 中使用{% elif lang == 'en' %}### Using with Cursor{% elif lang == 'zh_tw' %}### 在 Cursor 中使用{% endif %}
 
-编辑 Claude Desktop 配置文件 `claude_desktop_config.json`:
+{% if lang == 'zh' %}编辑 Cursor MCP 配置文件 `~/.cursor/mcp.json`:{% elif lang == 'en' %}Edit Cursor MCP config file `~/.cursor/mcp.json`:{% elif lang == 'zh_tw' %}編輯 Cursor MCP 配置檔案 `~/.cursor/mcp.json`:{% endif %}
 
 {% if transport == 'stdio' %}
 ```json
 {
   "mcpServers": {
-    "{{ server.name }}": {
-      "command": "python",
-      "args": ["E:\\path\\to\\{{ server.name }}\\server.py"]{% if api_spec.auth_type %},
+    "{{ server.package_name }}": {
+      "command": "uvx",
+      "args": ["--from", "{{ server.package_name }}", "{{ server.package_name.replace('-', '_') }}"]{% if api_spec.auth_type %},
       "env": {
         "API_KEY": "your_api_key_here"
       }{% endif %}
@@ -713,7 +811,23 @@ export API_KEY="your_api_key_here"
 }
 ```
 
-{% if lang == 'zh' %}**注意**: 请将 `E:\\path\\to\\{{ server.name }}\\server.py` 替换为实际的服务器文件路径。{% elif lang == 'en' %}**Note**: Replace `E:\\path\\to\\{{ server.name }}\\server.py` with the actual server file path.{% elif lang == 'zh_tw' %}**注意**: 請將 `E:\\path\\to\\{{ server.name }}\\server.py` 替換為實際的伺服器檔案路徑。{% endif %}
+{% if lang == 'zh' %}### 在 Claude Desktop 中使用{% elif lang == 'en' %}### Using with Claude Desktop{% elif lang == 'zh_tw' %}### 在 Claude Desktop 中使用{% endif %}
+
+{% if lang == 'zh' %}编辑 Claude Desktop 配置文件 `claude_desktop_config.json`:{% elif lang == 'en' %}Edit Claude Desktop config file `claude_desktop_config.json`:{% elif lang == 'zh_tw' %}編輯 Claude Desktop 配置檔案 `claude_desktop_config.json`:{% endif %}
+
+```json
+{
+  "mcpServers": {
+    "{{ server.package_name }}": {
+      "command": "uvx",
+      "args": ["--from", "{{ server.package_name }}", "{{ server.package_name.replace('-', '_') }}"]{% if api_spec.auth_type %},
+      "env": {
+        "API_KEY": "your_api_key_here"
+      }{% endif %}
+    }
+  }
+}
+```
 {% elif transport == 'sse' %}
 ```json
 {
@@ -798,21 +912,29 @@ HOST=0.0.0.0 PORT=9000 python server.py
 
 {% endfor %}
 
-## 技术栈
+{% if lang == 'zh' %}## 技术栈{% elif lang == 'en' %}## Tech Stack{% elif lang == 'zh_tw' %}## 技術棧{% endif %}
 
-- **FastMCP**: 快速、Pythonic 的 MCP 服务器框架
-- **传输协议**: {{ transport }}
+{% if lang == 'zh' %}- **传输协议**: {{ transport }}
 - **HTTP 客户端**: httpx
+{% elif lang == 'en' %}- **Transport Protocol**: {{ transport }}
+- **HTTP Client**: httpx
+{% elif lang == 'zh_tw' %}- **傳輸協定**: {{ transport }}
+- **HTTP 客戶端**: httpx
+{% endif %}
 
-## 开发
+{% if lang == 'zh' %}## 许可证{% elif lang == 'en' %}## License{% elif lang == 'zh_tw' %}## 授權{% endif %}
 
-{% if lang == 'zh' %}此服务器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具自动生成。
+{% if lang == 'zh' %}MIT License - 详见 [LICENSE](./LICENSE) 文件。{% elif lang == 'en' %}MIT License - See [LICENSE](./LICENSE) file for details.{% elif lang == 'zh_tw' %}MIT License - 詳見 [LICENSE](./LICENSE) 檔案。{% endif %}
+
+{% if lang == 'zh' %}## 开发{% elif lang == 'en' %}## Development{% elif lang == 'zh_tw' %}## 開發{% endif %}
+
+{% if lang == 'zh' %}此服务器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具生成。
 
 版本: {{ server.version }}
-{% elif lang == 'en' %}This server is automatically generated by [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) tool.
+{% elif lang == 'en' %}This server is generated by [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) tool.
 
 Version: {{ server.version }}
-{% elif lang == 'zh_tw' %}此伺服器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具自動生成。
+{% elif lang == 'zh_tw' %}此伺服器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具生成。
 
 版本: {{ server.version }}
 {% endif %}
