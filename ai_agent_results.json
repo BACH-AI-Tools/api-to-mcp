@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-01T16:51:46.315029",
+  "total": 7,
+  "subscribed": 5,
+  "results": [
+    {
+      "url": "https://rapidapi.com/apilinkedin/api/real-time-linkedin-scraper",
+      "name": null,
+      "status": "cannot_subscribe",
+      "has_free": true,
+      "subscribed": false,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/apilinkedin/api/fresh-linkedin-profile-data",
+      "name": null,
+      "status": "already_subscribed",
+      "has_free": false,
+      "subscribed": true,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/apizillow/api/zillow-com",
+      "name": null,
+      "status": "needs_card",
+      "has_free": false,
+      "subscribed": false,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/RockApis/api/real-time-linkedin-scraper-api",
+      "name": null,
+      "status": "already_subscribed",
+      "has_free": false,
+      "subscribed": true,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/FreshData/api/fresh-linkedin-profile-data",
+      "name": null,
+      "status": "already_subscribed",
+      "has_free": false,
+      "subscribed": true,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/apimaker/api/zillow-com",
+      "name": null,
+      "status": "already_subscribed",
+      "has_free": false,
+      "subscribed": true,
+      "error": ""
+    },
+    {
+      "url": "https://rapidapi.com/krasnoludkolo/api/facebook-scraper",
+      "name": null,
+      "status": "already_subscribed",
+      "has_free": false,
+      "subscribed": true,
+      "error": ""
+    }
+  ]
+}
