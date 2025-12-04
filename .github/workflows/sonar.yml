@@ -1,6 +1,7 @@
 name: SonarQube Analysis
 
 on:
+  workflow_dispatch:  # 支持手动触发
   push:
     branches:
       - main
